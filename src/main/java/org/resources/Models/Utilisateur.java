@@ -40,4 +40,5 @@ public class Utilisateur {
 	public void setRole(RoleUtilisateur role) {
 		this.role = role;
 	}
+	
 }
