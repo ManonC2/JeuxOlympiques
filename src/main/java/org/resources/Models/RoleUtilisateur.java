@@ -1,7 +1,8 @@
 package org.resources.Models;
 
-public class CategorieSite {
+public class RoleUtilisateur {
 	private int id;
+	
 	private String nom;
 	
 	public int getId() {
