@@ -1,6 +1,15 @@
 package org.resources.Models;
 
 public class Epreuve {
+	
+	public Epreuve(String nom, Discipline discipline, CategorieEpreuve categorieEpreuve) {
+		super();
+		this.nom = nom;
+		this.discipline = discipline;
+		this.categorieEpreuve = categorieEpreuve;
+	}
+
+	
 	private int id;
 	
 	private String nom;
