@@ -1,5 +1,5 @@
 package org.resources.Models;
 
-public class TypeUtilisateur {
+public class RoleUtilisateur {
 
 }
