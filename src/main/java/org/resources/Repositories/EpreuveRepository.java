@@ -3,6 +3,7 @@ package org.resources.Repositories;
 import org.resources.Models.*;
 
 public class EpreuveRepository {
+	
 	public Epreuve addEpreuve(String nom, Discipline discipline, CategorieEpreuve categorieEpreuve) {
 		
 		Epreuve epreuve = new Epreuve(nom, discipline, categorieEpreuve);

@@ -4,6 +4,11 @@ public class CategorieEpreuve {
 	private int id;
 	private String nom;
 	
+	public CategorieEpreuve(int id, String nom) {
+		this.id = id;
+		this.nom = nom;
+	}
+
 	public int getId() {
 		return id;
 	}
