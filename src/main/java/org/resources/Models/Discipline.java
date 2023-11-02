@@ -3,9 +3,16 @@ package org.resources.Models;
 public class Discipline {
 	private int id ;
 	
+	
 	private String nom;
 	
 	private boolean paralympique;
+
+	public Discipline(String nom, boolean paralympique) {
+		super();
+		this.nom = nom;
+		this.paralympique = paralympique;
+	}
 
 	public int getId() {
 		return id;

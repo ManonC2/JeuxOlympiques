@@ -1,0 +1,41 @@
+{% extends "WEB-INF/views/base.html" %}
+
+{% block title %} Sessions {% endblock %}
+
+{% block content %}
+	<div class="d-flex justify-content-center">
+		<a href="http://localhost:8080/JeuxOlympique/web/sessions/newSession"><button class="btn btn-primary mb-3">Ajouter une session</button></a>
+	</div>
+	<div class="d-flex justify-content-center">
+	<table class="table w-75">
+		<thead>
+			<tr>
+				<th scope="col">-</th>
+				<th scope="col">Code</th>
+				<th scope="col">Date</th>
+				<th scope="col">Heure de début</th>
+				<th scope="col">Heure de fin</th>
+				<th scope="col">Description</th>
+				<th scope="col">Site</th>
+				<th scope="col">Type de session</th>
+				<th scope="col">Epreuve</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for session in sessions %}
+				 <tr>
+			      <td>{{ session.id }}</td>
+			      <td>{{ session.code }}</td>
+			      <td>{{ session.date }}</td>
+			      <td>{{ session.heureDebut }}</td>
+			      <td>{{ session.heureFin }}</td>
+			      <td>{{ session.description }}</td>
+			      <td>{{ session.site.nom }}</td>
+			      <td>{{ session.typeSession.nom }}</td>
+			      <td>{{ session.epreuve.nom }}</td>
+			    </tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	</div>
+{% endblock %}

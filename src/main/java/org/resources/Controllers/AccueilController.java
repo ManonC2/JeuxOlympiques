@@ -22,7 +22,7 @@ public class AccueilController {
 	
 	@GET
 	@Produces(MediaType.TEXT_HTML)
-	@Path("/hello")
+	@Path("/")
 	public String hello() throws IOException {
 		PebbleEngine engine = new PebbleEngine.Builder().build();
 		PebbleTemplate compiledTemplate = engine.getTemplate("WEB-INF/views/accueil.html");

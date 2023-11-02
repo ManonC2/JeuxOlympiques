@@ -9,6 +9,13 @@ public class Utilisateur {
 	
 	private RoleUtilisateur role;
 	
+	public Utilisateur(String login, String password, RoleUtilisateur role) {
+		super();
+		this.login = login;
+		this.password = password;
+		this.role = role;
+	}
+
 	public int getId() {
 		return id;
 	}

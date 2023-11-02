@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Session {
 	private int id;
-	
+
 	private String code;
 	
 	private Date date;
@@ -21,6 +21,19 @@ public class Session {
 	private TypeSession typeSession;
 	
 	private Epreuve epreuve;
+	
+	public Session(String code, Date date, Time heureDebut, Time heureFin, String description, Site site,
+			TypeSession typeSession, Epreuve epreuve) {
+		super();
+		this.code = code;
+		this.date = date;
+		this.heureDebut = heureDebut;
+		this.heureFin = heureFin;
+		this.description = description;
+		this.site = site;
+		this.typeSession = typeSession;
+		this.epreuve = epreuve;
+	}
 
 	public int getId() {
 		return id;

@@ -6,6 +6,11 @@ public class RoleUtilisateur {
 	
 	private String nom;
 	
+	public RoleUtilisateur(String nom) {
+		super();
+		this.nom = nom;
+	}
+
 	public int getId() {
 		return id;
 	}

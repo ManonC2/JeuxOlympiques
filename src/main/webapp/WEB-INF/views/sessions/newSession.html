@@ -1,0 +1,47 @@
+{% extends "WEB-INF/views/base.html" %}
+
+{% block title %} Sessions {% endblock %}
+
+{% block content %}
+
+	<div class="d-flex justify-content-center">
+		<a href="http://localhost:8080/JeuxOlympique/web/sessions/" class="mt-5"><button class="btn btn-primary">Retour</button></a>
+	</div>
+	
+	<div class="d-flex justify-content-center">
+		
+		<form action="" method="get" class="m-5">
+	  	<div class="form-group text-center">
+	    <label for="code">Entrez le code de la session : </label>
+	    <input type="text" name="code" id="code" class="form-control" required />
+	  
+	    <label for="date">Entrez la date de la session : </label>
+	    <input type="date" name="date" id="date" class="form-control" required />
+	  
+	    <label for="date">Entrez l'heure de début de la session : </label>
+	    <input type="time" name="date" id="date" class="form-control" required />
+	  
+	    <label for="date">Entrez l'heure de fin de la session : </label>
+	    <input type="time" name="date" id="date" class="form-control" required />
+	  
+	    <label for="date">Entrez la description de la session : </label>
+	    <input type="text" name="date" id="date" class="form-control" required />
+	  
+	    <label for="date">Entrez le site de la session : </label>
+	    <input type="date" name="date" id="date" class="form-control" required />
+	  
+	    <label for="date">Entrez la type de la session : </label>
+	    <input type="date" name="date" id="date" class="form-control" required />
+	  
+	    <label for="date">Entrez l'épreuve de la session : </label>
+	    <input type="date" name="date" id="date" class="form-control" required />
+	  
+	    <button type="submit" class="btn btn-success mt-4" value="Enregistrer la session">Enregistrer</button>
+	  </div>
+	</form>
+	</div>
+	
+
+	
+	
+{% endblock %}

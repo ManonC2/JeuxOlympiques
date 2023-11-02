@@ -2,8 +2,14 @@ package org.resources.Models;
 
 public class TypeSession {
 	private int id;
+	
 	private String nom;
 	
+	public TypeSession(String nom) {
+		super();
+		this.nom = nom;
+	}
+
 	public int getId() {
 		return id;
 	}
