@@ -1,14 +1,15 @@
 package org.resources.Controllers;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
+import java.io.StringWriter;
+import java.util.HashMap;
 
-import org.resources.Models.CategorieEpreuve;
+import java.util.Map;
+
 import org.resources.Repositories.CategorieEpreuveRepository;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.mitchellbosecke.pebble.PebbleEngine;
+import com.mitchellbosecke.pebble.template.PebbleTemplate;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -20,32 +21,22 @@ public class AccueilController {
 	private CategorieEpreuveRepository categorieEpreuveRepository = new CategorieEpreuveRepository();
 	
 	@GET
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_HTML)
 	@Path("/hello")
-	public String hello() {
-		return "Hello World";
-	}
-	
-	@GET
-	@Path("/setBDD")
-	public String setBDD() {
+	public String hello() throws IOException {
+		PebbleEngine engine = new PebbleEngine.Builder().build();
+		PebbleTemplate compiledTemplate = engine.getTemplate("WEB-INF/views/accueil.html");
+
+		Map<String, Object> context = new HashMap<>();
+		context.put("name", "Mitchell");
+
+		StringWriter writer = new StringWriter();
+
+		compiledTemplate.evaluate(writer, context);
+
+
+		String output = writer.toString();
 		
-		
-		categorieEpreuveRepository.createAndPopulate();
-		
-		return "ok";
-	}
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/categoriesEpreuves")
-	public String getBooks() {
-		List<CategorieEpreuve> liste = categorieEpreuveRepository.findAll();
-		
-		GsonBuilder builder = new GsonBuilder();
-		Gson gson = builder.create();
-		String json = gson.toJson(liste);
-		
-		return json;
+		return output;
 	}
 }

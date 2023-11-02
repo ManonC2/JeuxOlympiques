@@ -37,22 +37,6 @@ public class CategorieEpreuveRepository {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return liste;
-		
+		return liste;	
 	}
-	
-	public void createAndPopulate() {
-		try {
-			String createTableSQL = "CREATE TABLE Site (id int,nom varchar(255),ville varchar(255),categorie_id int);";
-
-// 4. Exécutez la requête pour créer la table
-			connection.createStatement().execute(createTableSQL);
-
-// 5. Fermez la connexion
-			connection.close();
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 }
