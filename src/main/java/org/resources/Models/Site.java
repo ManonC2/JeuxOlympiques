@@ -16,6 +16,14 @@ public class Site {
 		this.categorieSite = categorieSite;
 	}
 
+	public Site(int id, String nom, String ville, CategorieSite categorieSite) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.ville = ville;
+		this.categorieSite = categorieSite;
+	}
+
 	public int getId() {
 		return id;
 	}

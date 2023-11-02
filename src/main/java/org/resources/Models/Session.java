@@ -35,6 +35,20 @@ public class Session {
 		this.epreuve = epreuve;
 	}
 
+	public Session(int id, String code, Date date, Time heureDebut, Time heureFin, String description, Site site,
+			TypeSession typeSession, Epreuve epreuve) {
+		super();
+		this.id = id;
+		this.code = code;
+		this.date = date;
+		this.heureDebut = heureDebut;
+		this.heureFin = heureFin;
+		this.description = description;
+		this.site = site;
+		this.typeSession = typeSession;
+		this.epreuve = epreuve;
+	}
+
 	public int getId() {
 		return id;
 	}

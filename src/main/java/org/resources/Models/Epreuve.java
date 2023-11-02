@@ -17,6 +17,14 @@ public class Epreuve {
 		this.categorieEpreuve = categorieEpreuve;
 	}
 
+	public Epreuve(int id, String nom, Discipline discipline, CategorieEpreuve categorieEpreuve) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.discipline = discipline;
+		this.categorieEpreuve = categorieEpreuve;
+	}
+
 	public int getId() {
 		return id;
 	}

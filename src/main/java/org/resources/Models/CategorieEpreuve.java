@@ -9,6 +9,11 @@ public class CategorieEpreuve {
 		this.nom = nom;
 	}
 
+	public CategorieEpreuve(String nom) {
+		super();
+		this.nom = nom;
+	}
+
 	public int getId() {
 		return id;
 	}

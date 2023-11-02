@@ -14,6 +14,17 @@ public class Discipline {
 		this.paralympique = paralympique;
 	}
 
+	
+	
+	public Discipline(int id, String nom, boolean paralympique) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.paralympique = paralympique;
+	}
+
+
+
 	public int getId() {
 		return id;
 	}

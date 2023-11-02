@@ -10,6 +10,16 @@ public class CategorieSite {
 		this.nom = nom;
 	} 
 	
+	
+	
+	public CategorieSite(int id, String nom) {
+		super();
+		this.id = id;
+		this.nom = nom;
+	}
+
+
+
 	public int getId() {
 		return id;
 	}

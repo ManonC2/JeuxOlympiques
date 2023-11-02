@@ -16,6 +16,14 @@ public class Utilisateur {
 		this.role = role;
 	}
 
+	public Utilisateur(int id, String login, String password, RoleUtilisateur role) {
+		super();
+		this.id = id;
+		this.login = login;
+		this.password = password;
+		this.role = role;
+	}
+
 	public int getId() {
 		return id;
 	}

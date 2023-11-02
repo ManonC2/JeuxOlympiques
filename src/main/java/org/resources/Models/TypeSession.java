@@ -10,6 +10,12 @@ public class TypeSession {
 		this.nom = nom;
 	}
 
+	public TypeSession(int id, String nom) {
+		super();
+		this.id = id;
+		this.nom = nom;
+	}
+
 	public int getId() {
 		return id;
 	}
