@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.resources.Models.Session;
-
+import org.resources.Repositories.SessionRepository;
 
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
@@ -22,6 +22,7 @@ import jakarta.ws.rs.core.MediaType;
 
 @Path("/sessions")
 public class SessionController {
+	SessionRepository sessionRepository = new SessionRepository();
 	
 	@GET
 	@Produces(MediaType.TEXT_HTML)
@@ -30,8 +31,8 @@ public class SessionController {
 		PebbleEngine engine = new PebbleEngine.Builder().build();
 		PebbleTemplate compiledTemplate = engine.getTemplate("WEB-INF/views/sessions/session.html");
 		
-		List<Session> listeSessions = new ArrayList<Session>();
-		listeSessions.add(null);
+		List<Session> listeSessions = sessionRepository.findAll();
+		
 
 		Map<String, Object> context = new HashMap<>();
 		context.put("sessions", listeSessions);
