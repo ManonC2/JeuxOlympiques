@@ -9,8 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.resources.Models.CategorieSite;
 import org.resources.Models.Session;
-
+import org.resources.Models.Site;
+import org.resources.Repositories.CategorieSiteRepository;
+import org.resources.Repositories.SiteRepository;
 
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
@@ -23,6 +26,9 @@ import jakarta.ws.rs.core.MediaType;
 @Path("/sites")
 public class SiteController {
 	
+	SiteRepository siteRepository = new SiteRepository();
+	CategorieSiteRepository categorieSiteRepository = new CategorieSiteRepository();
+	
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	@Path("/")
@@ -30,11 +36,10 @@ public class SiteController {
 		PebbleEngine engine = new PebbleEngine.Builder().build();
 		PebbleTemplate compiledTemplate = engine.getTemplate("WEB-INF/views/sites/sites.html");
 		
-		List<Session> listeSessions = new ArrayList<Session>();
-		listeSessions.add(null);
+		List<Site> listeSites = siteRepository.findAll();
 
 		Map<String, Object> context = new HashMap<>();
-		context.put("sessions", listeSessions);
+		context.put("sites", listeSites);
 
 		StringWriter writer = new StringWriter();
 
@@ -48,14 +53,15 @@ public class SiteController {
 	
 	@GET
 	@Produces(MediaType.TEXT_HTML)
-	@Path("/newSession")
+	@Path("/newSite")
 	public String newSession() throws IOException {
 		PebbleEngine engine = new PebbleEngine.Builder().build();
-		PebbleTemplate compiledTemplate = engine.getTemplate("WEB-INF/views/sessions/newSession.html");
+		PebbleTemplate compiledTemplate = engine.getTemplate("WEB-INF/views/sites/newSite.html");
 		
-
+		List<CategorieSite> listeCategoriesSites = categorieSiteRepository.findAll();
+		
 		Map<String, Object> context = new HashMap<>();
-//		context.put();
+		context.put("categoriesSites", listeCategoriesSites);
 
 		StringWriter writer = new StringWriter();
 

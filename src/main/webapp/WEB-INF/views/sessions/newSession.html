@@ -3,10 +3,6 @@
 {% block title %} Sessions {% endblock %}
 
 {% block content %}
-
-	<div class="d-flex justify-content-center">
-		<a href="http://localhost:8080/JeuxOlympique/web/sessions/" class="mt-5"><button class="btn btn-primary">Retour</button></a>
-	</div>
 	
 	<div class="d-flex justify-content-center">
 		
@@ -28,15 +24,31 @@
 	    <input type="text" name="date" id="date" class="form-control" required />
 	  
 	    <label for="date">Entrez le site de la session : </label>
-	    <input type="date" name="date" id="date" class="form-control" required />
+	    <select id="site" name="site" class="form-control" required>
+			{% for site in sites %}
+				<option value="{{ site.id }}" >{{ site.nom }}</option>
+			{% endfor %}
+		</select>
 	  
 	    <label for="date">Entrez la type de la session : </label>
-	    <input type="date" name="date" id="date" class="form-control" required />
+	    <select id="site" name="site" class="form-control" required>
+			{% for typeSession in typeSessions %}
+				<option value="{{ typeSession.id }}" >{{ typeSession.nom }}</option>
+			{% endfor %}
+		</select>
 	  
 	    <label for="date">Entrez l'épreuve de la session : </label>
-	    <input type="date" name="date" id="date" class="form-control" required />
+	    <select id="site" name="site" class="form-control" required>
+			{% for epreuve in epreuves %}
+				<option value="{{ epreuve.id }}" >{{ epreuve.nom }} {{ epreuve.categorieEpreuve.nom }}</option>
+			{% endfor %}
+		</select>
 	  
-	    <button type="submit" class="btn btn-success mt-4" value="Enregistrer la session">Enregistrer</button>
+	    <div class="d-flex justify-content-around mt-4">
+			    <button type="submit" class="btn btn-success" value="Enregistrer la session">Enregistrer</button>
+			    <a href="http://localhost:8080/JeuxOlympique/web/sessions/"><button class="btn btn-primary">Retour</button></a>
+		  </div>
+		  
 	  </div>
 	</form>
 	</div>

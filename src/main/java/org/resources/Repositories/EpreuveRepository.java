@@ -25,6 +25,36 @@ public class EpreuveRepository {
 	    }
 	}
 	
+	public List<Epreuve> findAll() {
+		
+		List<Epreuve> liste = new ArrayList<Epreuve>();
+		
+		Statement statement;
+		try {
+			statement = connection.createStatement();
+			
+			ResultSet rs = statement.executeQuery("select * from Epreuve");
+			
+			while(rs.next()) {
+				int id = Integer.parseInt(rs.getString("id"));
+				String nom = rs.getString("nom");
+				int disciplineId = Integer.parseInt(rs.getString("discipline_id"));
+				int categorieEpreuveId = Integer.parseInt(rs.getString("categorieEpreuve_id"));
+	
+				DisciplineRepository disciplineRepo = new DisciplineRepository();
+				CategorieEpreuveRepository categorieEpreuveRepo = new CategorieEpreuveRepository();
+				
+				liste.add(new Epreuve(id, nom, disciplineRepo.findById(disciplineId), categorieEpreuveRepo.findById(categorieEpreuveId)));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return liste;
+		
+	}
+	
 	public Epreuve findById(int id) {
 		
 		Statement statement;
