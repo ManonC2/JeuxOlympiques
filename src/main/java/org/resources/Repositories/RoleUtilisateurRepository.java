@@ -1,8 +1,6 @@
 package org.resources.Repositories;
 import java.sql.Connection;
 
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,16 +8,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.assets.DBManager;
-import org.resources.Models.CategorieEpreuve;
 import org.resources.Models.RoleUtilisateur;
 
 public class RoleUtilisateurRepository {
-Connection connection = DBManager.getInstance().getConnection();
+	Connection connection = DBManager.getInstance().getConnection();
+	
 	
 	public void add(RoleUtilisateur roleUtilisateur) {
 	    String insertQuery = "insert into RoleUtilisateur (nom) VALUES ( '" + roleUtilisateur.getNom() + "')";
 	    try {
 	    	connection.createStatement().execute(insertQuery);
+	    }
+	    catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	public void update(RoleUtilisateur roleUtilisateur) {
+	    String insertQuery = "update RoleUtilisateur set nom = '" + roleUtilisateur.getNom() + "' where id = " + roleUtilisateur.getId();
+	    try {
+	    	connection.createStatement().execute(insertQuery);
+	    }
+	    catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void delete(int id) {
+		String insertQuery = "delete from RoleUtilisateur where id = " + id;
+		try {
+	    	connection.createStatement().execute(insertQuery);	    	
+	    	UtilisateurRepository utilisateurRepository = new UtilisateurRepository();
+	    	utilisateurRepository.deleteFromRole(id);
 	    }
 	    catch (SQLException e) {
 	        e.printStackTrace();

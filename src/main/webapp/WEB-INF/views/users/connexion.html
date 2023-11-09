@@ -1,0 +1,47 @@
+{% extends "WEB-INF/views/base.html" %}
+
+{% block title %} Sites {% endblock %}
+
+{% block content %}
+<body>
+	
+		
+	
+	<div class="d-flex justify-content-center">
+		
+		<form action="" method="get" class="m-5">
+	  	<div class="form-group text-center">
+			  
+	    <label for="login">Entrez le login de l'utilisateur : </label>
+	    <input type="text" name="login" id="login" class="form-control" required />
+	  	
+	  	<label for="email">Entrez le courriel de l'utilisateur : </label>
+	    <input type="text" name="email" id="email" class="form-control" required />
+	    
+	    <label for="nom">Entrez le nom de l'utilisateur : </label>
+	    <input type="text" name="nom" id="nom" class="form-control" required />
+	    
+	    <label for="prenom">Entrez le prénom de l'utilisateur : </label>
+	    <input type="text" name="prenom" id="prenom" class="form-control" required />
+	  
+	    <label for="role">Entrez le rôle de l'utilisateur : </label>
+	    <select id="role" name="role" class="form-control" required>
+			{% for role in roles %}
+				<option value="{{ role.id }}" >{{ role.nom }}</option>
+			{% endfor %}
+		</select>
+		
+	  	<div class="d-flex justify-content-around mt-4">
+			    <button type="submit" class="btn btn-success">Enregistrer</button>
+			    <a href="http://localhost:8080/JeuxOlympique/web/sites/" class="btn btn-primary">Retour</a>
+		  </div>
+	  
+	  
+	  </div>
+	</form>
+	</div>
+	
+
+</body>	
+	
+{% endblock %}

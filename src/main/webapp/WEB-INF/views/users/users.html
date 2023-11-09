@@ -1,0 +1,32 @@
+{% extends "WEB-INF/views/base.html" %}
+
+{% block title %} Utilisateurs {% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+	<a href="http://localhost:8080/JeuxOlympique/web/users/newUser"><button class="btn btn-primary mb-3">Ajouter un
+			utilisateur</button></a>
+</div>
+<div class="d-flex justify-content-center">
+	<table class="table w-75">
+		<thead>
+			<tr>
+				<th scope="col">Role</th>
+				<th scope="col">Email</th>
+				<th scope="col">Nom</th>
+				<th scope="col">Prenom</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
+			<tr>
+				<td>{{ user.role.nom }}</td>
+				<td>{{ user.email }}</td>
+				<td>{{ user.nom }}</td>
+				<td>{{ user.prenom }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}

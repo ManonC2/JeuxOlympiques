@@ -6,7 +6,7 @@
 	
 	<div class="d-flex justify-content-center">
 		
-		<form action="" method="get" class="m-5">
+		<form action="http://localhost:8080/JeuxOlympique/web/sessions/addSession" method="post" class="m-5">
 	  	<div class="form-group text-center">
 	    <label for="code">Entrez le code de la session : </label>
 	    <input type="text" name="code" id="code" class="form-control" required />
@@ -14,31 +14,31 @@
 	    <label for="date">Entrez la date de la session : </label>
 	    <input type="date" name="date" id="date" class="form-control" required />
 	  
-	    <label for="date">Entrez l'heure de début de la session : </label>
-	    <input type="time" name="date" id="date" class="form-control" required />
+	    <label for="heureDebut">Entrez l'heure de début de la session : </label>
+	    <input type="time" name="heureDebut" id="heureDebut" class="form-control" required />
 	  
-	    <label for="date">Entrez l'heure de fin de la session : </label>
-	    <input type="time" name="date" id="date" class="form-control" required />
+	    <label for="heureFin">Entrez l'heure de fin de la session : </label>
+	    <input type="time" name="heureFin" id="heureFin" class="form-control" required />
 	  
-	    <label for="date">Entrez la description de la session : </label>
-	    <input type="text" name="date" id="date" class="form-control" required />
+	    <label for="description">Entrez la description de la session : </label>
+	    <input type="text" name="description" id="description" class="form-control" required />
 	  
-	    <label for="date">Entrez le site de la session : </label>
+	    <label for="site">Entrez le site de la session : </label>
 	    <select id="site" name="site" class="form-control" required>
 			{% for site in sites %}
 				<option value="{{ site.id }}" >{{ site.nom }}</option>
 			{% endfor %}
 		</select>
 	  
-	    <label for="date">Entrez la type de la session : </label>
-	    <select id="site" name="site" class="form-control" required>
+	    <label for="type">Entrez la type de la session : </label>
+	    <select id="type" name="type" class="form-control" required>
 			{% for typeSession in typeSessions %}
 				<option value="{{ typeSession.id }}" >{{ typeSession.nom }}</option>
 			{% endfor %}
 		</select>
 	  
-	    <label for="date">Entrez l'épreuve de la session : </label>
-	    <select id="site" name="site" class="form-control" required>
+	    <label for="epreuve">Entrez l'épreuve de la session : </label>
+	    <select id="epreuve" name="epreuve" class="form-control" required>
 			{% for epreuve in epreuves %}
 				<option value="{{ epreuve.id }}" >{{ epreuve.nom }} {{ epreuve.categorieEpreuve.nom }}</option>
 			{% endfor %}

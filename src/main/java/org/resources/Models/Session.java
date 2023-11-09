@@ -10,9 +10,9 @@ public class Session {
 	
 	private Date date;
 	
-	private Time heureDebut;
+	private Date heureDebut;
 	
-	private Time heureFin;
+	private Date heureFin;
 	
 	private String description;
 	
@@ -22,7 +22,7 @@ public class Session {
 	
 	private Epreuve epreuve;
 	
-	public Session(String code, Date date, Time heureDebut, Time heureFin, String description, Site site,
+	public Session(String code, Date date, Date heureDebut, Date heureFin, String description, Site site,
 			TypeSession typeSession, Epreuve epreuve) {
 		super();
 		this.code = code;
@@ -35,7 +35,7 @@ public class Session {
 		this.epreuve = epreuve;
 	}
 
-	public Session(int id, String code, Date date, Time heureDebut, Time heureFin, String description, Site site,
+	public Session(int id, String code, Date date, Date heureDebut, Date heureFin, String description, Site site,
 			TypeSession typeSession, Epreuve epreuve) {
 		super();
 		this.id = id;
@@ -73,19 +73,19 @@ public class Session {
 		this.date = date;
 	}
 
-	public Time getHeureDebut() {
+	public Date getHeureDebut() {
 		return heureDebut;
 	}
 
-	public void setHeureDebut(Time heureDebut) {
+	public void setHeureDebut(Date heureDebut) {
 		this.heureDebut = heureDebut;
 	}
 
-	public Time getHeureFin() {
+	public Date getHeureFin() {
 		return heureFin;
 	}
 
-	public void setHeureFin(Time heureFin) {
+	public void setHeureFin(Date heureFin) {
 		this.heureFin = heureFin;
 	}
 

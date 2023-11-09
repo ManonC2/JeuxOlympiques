@@ -88,12 +88,10 @@ public class DBManager {
 		Connection c = DBManager.getInstance().getConnection();
 		if (c != null) {
 			try {
-				System.out.println("Connection to db : " + c.getCatalog());
 				Properties p = c.getClientInfo();
 				Enumeration<Object> keys = p.keys();
 				while (keys.hasMoreElements()) {
 					String key = (String) keys.nextElement();
-					System.out.println(key + ":" + p.getProperty(key));
 				}
 
 			} catch (SQLException e) {

@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.assets.DBManager;
-import org.resources.Models.CategorieEpreuve;
 import org.resources.Models.CategorieSite;
 
 public class CategorieSiteRepository {
 	Connection connection = DBManager.getInstance().getConnection();
+	
 	
 	public void add(CategorieSite categorieSite) {
 	    String insertQuery = "insert into CategorieSite (nom) VALUES ( '" + categorieSite.getNom() + "')";
@@ -24,6 +24,28 @@ public class CategorieSiteRepository {
 	    }
 	}
 	
+	public void update(CategorieSite categorieSite) {
+	    String insertQuery = "update CategorieSite set nom = '" + categorieSite.getNom() + "' where id = " + categorieSite.getId();
+	    try {
+	    	connection.createStatement().execute(insertQuery);
+	    }
+	    catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void delete(int id) {
+		String insertQuery = "delete from CategorieSite where id = " + id;
+		try {
+	    	connection.createStatement().execute(insertQuery);	
+	    	SiteRepository siteRepository = new SiteRepository();
+	    	siteRepository.deleteFromCategorieSite(id);
+	    }
+	    catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
 	public List<CategorieSite> findAll() {
 		
 		List<CategorieSite> liste = new ArrayList<CategorieSite>();

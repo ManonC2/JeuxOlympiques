@@ -6,8 +6,6 @@ import java.util.HashMap;
 
 import java.util.Map;
 
-import org.resources.Repositories.CategorieEpreuveRepository;
-
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
 
@@ -18,7 +16,6 @@ import jakarta.ws.rs.core.MediaType;
 
 @Path("/accueil")
 public class AccueilController {
-	private CategorieEpreuveRepository categorieEpreuveRepository = new CategorieEpreuveRepository();
 	
 	@GET
 	@Produces(MediaType.TEXT_HTML)

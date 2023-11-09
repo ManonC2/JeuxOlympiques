@@ -1,12 +1,9 @@
 package org.resources.Repositories;
 import java.sql.Connection;
 
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,14 +11,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.assets.DBManager;
-import org.resources.Models.CategorieEpreuve;
-import org.resources.Models.Epreuve;
 import org.resources.Models.Session;
-import org.resources.Models.Site;
-import org.resources.Models.TypeSession;
 
 public class SessionRepository {
-Connection connection = DBManager.getInstance().getConnection();
+	Connection connection = DBManager.getInstance().getConnection();
 
 	public void add(Session session) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM");
@@ -34,7 +27,59 @@ Connection connection = DBManager.getInstance().getConnection();
 	        e.printStackTrace();
 	    }
 	}
-		
+	
+	public void update(Session session) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM");
+		SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
+	    String insertQuery = "update Session set code = '"+session.getCode()+"', date = '"+dateFormat.format(session.getDate())+"', heureDebut = '"+timeFormat.format(session.getHeureDebut())+"', heureFin = '"+timeFormat.format(session.getHeureFin())+"', description = '"+session.getDescription()+"', site_id = "+session.getSite().getId()+", typeSession_id = "+session.getTypeSession().getId()+", epreuve_id = "+session.getEpreuve().getId()+" WHERE id = " + session.getId();
+	    try {
+	    	connection.createStatement().execute(insertQuery);
+	    }
+	    catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void delete(int id) {
+		String insertQuery = "delete from Session where id = " + id;
+		try {
+	    	connection.createStatement().execute(insertQuery);
+	    }
+	    catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void deleteFromTypeSession(int typeSession_id) {
+		String insertQuery = "delete from Session where typeSession_id = " + typeSession_id;
+		try {
+	    	connection.createStatement().execute(insertQuery);
+	    }
+	    catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void deleteFromEpreuve(int epreuve_id) {
+		String insertQuery = "delete from Session where epreuve_id = " + epreuve_id;
+		try {
+	    	connection.createStatement().execute(insertQuery);
+	    }
+	    catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void deleteFromSite(int site_id) {
+		String insertQuery = "delete from Session where site_id = " + site_id;
+		try {
+	    	connection.createStatement().execute(insertQuery);
+	    }
+	    catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
 	public List<Session> findAll() {
 		
 		List<Session> liste = new ArrayList<Session>();
@@ -50,8 +95,8 @@ Connection connection = DBManager.getInstance().getConnection();
 				int id = Integer.parseInt(rs.getString("id"));
 				String code = rs.getString("code");
 				Date date = sdf.parse(rs.getString("date"));
-				Time heureDebut = new Time(sdf.parse(rs.getString("heureDebut")).getTime());
-				Time heureFin = new Time(sdf.parse(rs.getString("heureFin")).getTime());
+				Date heureDebut = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("heureDebut"));
+				Date heureFin = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("heureFin"));
 				String description = rs.getString("description");
 				
 				int siteId = Integer.parseInt(rs.getString("site_id"));
@@ -86,8 +131,8 @@ Connection connection = DBManager.getInstance().getConnection();
 			while(rs.next()) {
 				String code = rs.getString("code");
 				Date date = sdf.parse(rs.getString("date"));
-				Time heureDebut = new Time(sdf.parse(rs.getString("heureDebut")).getTime());
-				Time heureFin = new Time(sdf.parse(rs.getString("heureFin")).getTime());
+				Date heureDebut = new Date(sdf.parse(rs.getString("heureDebut")).getTime());
+				Date heureFin = new Date(sdf.parse(rs.getString("heureFin")).getTime());
 				String description = rs.getString("description");
 				
 				int siteId = Integer.parseInt(rs.getString("site_id"));

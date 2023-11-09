@@ -8,18 +8,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.assets.DBManager;
-import org.resources.Models.CategorieEpreuve;
 import org.resources.Models.Discipline;
-import org.resources.Models.Epreuve;
-
 public class DisciplineRepository {
 	
 	Connection connection = DBManager.getInstance().getConnection();
 	
+	
 	public void add(Discipline discipline) {
-	    String insertQuery = "insert into Discipline (nom, paraylympique) VALUES ( '" + discipline.getNom() + "', "+ discipline.isParalympique() +")";
+	    String insertQuery = "insert into Discipline (nom, paralympique) VALUES ( '" + discipline.getNom() + "', "+ discipline.isParalympique() +")";
 	    try {
 	    	connection.createStatement().execute(insertQuery);
+	    }
+	    catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void update(Discipline discipline) {
+	    String insertQuery = "update Discipline set nom = '" + discipline.getNom() + "', paralympique = "+ discipline.isParalympique() +" where id = " + discipline.getId();
+	    try {
+	    	connection.createStatement().execute(insertQuery);
+	    }
+	    catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	public void delete(int id) {
+		String insertQuery = "delete from Discipline where id = " + id;
+		try {
+	    	connection.createStatement().execute(insertQuery);	
+	    	EpreuveRepository epreuveRepository = new EpreuveRepository();
+	    	epreuveRepository.deleteFromDiscipline(id);
 	    }
 	    catch (SQLException e) {
 	        e.printStackTrace();

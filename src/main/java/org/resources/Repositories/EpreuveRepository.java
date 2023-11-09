@@ -25,6 +25,65 @@ public class EpreuveRepository {
 	    }
 	}
 	
+	public void update(Epreuve epreuve) {
+	    String insertQuery = "update Epreuve set nom = '" + epreuve.getNom() + "', discipline_id = " + epreuve.getDiscipline().getId() + ", categorieEpreuve_id = "+ epreuve.getCategorieEpreuve().getId() + " where id = " + epreuve.getId();
+	    try {
+	    	connection.createStatement().execute(insertQuery);
+	    }
+	    catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void delete(int id) {
+		String insertQuery = "delete from Epreuve where id = " + id;
+		try {
+	    	connection.createStatement().execute(insertQuery);
+	    	SessionRepository sessionRepository = new SessionRepository();
+	    	sessionRepository.deleteFromEpreuve(id);
+	    }
+	    catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void deleteFromCategorieEpreuve(int categorieEpreuve_id) {
+		String insertQuery = "delete from Epreuve where categorieEpreuve_id = " + categorieEpreuve_id;
+		Statement statement;
+		try {
+			statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("select * from Epreuve where categorieEpreuve_id = " + categorieEpreuve_id);
+			SessionRepository sessionRepository = new SessionRepository();
+			while(rs.next()) {
+				int id = Integer.parseInt(rs.getString("id"));
+				sessionRepository.deleteFromEpreuve(id);
+			}
+			
+	    	connection.createStatement().execute(insertQuery);
+	    }
+	    catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	public void deleteFromDiscipline(int discipline_id) {
+		String insertQuery = "delete from Epreuve where discipline_id = " + discipline_id;
+		Statement statement;
+		try {
+			statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("select * from Epreuve where discipline_id = " + discipline_id);
+			while(rs.next()) {
+				int id = Integer.parseInt(rs.getString("id"));
+				SessionRepository sessionRepository = new SessionRepository();
+				sessionRepository.deleteFromEpreuve(id);
+			}
+			
+	    	connection.createStatement().execute(insertQuery);
+		}
+	    catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
 	public List<Epreuve> findAll() {
 		
 		List<Epreuve> liste = new ArrayList<Epreuve>();
@@ -33,14 +92,14 @@ public class EpreuveRepository {
 		try {
 			statement = connection.createStatement();
 			
-			ResultSet rs = statement.executeQuery("select * from Epreuve");
+			ResultSet rs = statement.executeQuery("select * from Epreuve ORDER BY discipline_id");
 			
 			while(rs.next()) {
 				int id = Integer.parseInt(rs.getString("id"));
 				String nom = rs.getString("nom");
 				int disciplineId = Integer.parseInt(rs.getString("discipline_id"));
 				int categorieEpreuveId = Integer.parseInt(rs.getString("categorieEpreuve_id"));
-	
+				
 				DisciplineRepository disciplineRepo = new DisciplineRepository();
 				CategorieEpreuveRepository categorieEpreuveRepo = new CategorieEpreuveRepository();
 				
@@ -80,17 +139,5 @@ public class EpreuveRepository {
 		}
 		
 		return null;
-	}
-	
-	public Epreuve updateEpreuve(Epreuve epreuve) {
-		//TODO rédiger méthode 
-		
-		return epreuve;
-	}
-	
-	public void deleteEpreuve(int id) {
-		Epreuve epreuve = findById(id);
-		
-		//TODO rédiger méthode
 	}
 }

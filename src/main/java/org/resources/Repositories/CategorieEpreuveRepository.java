@@ -14,6 +14,7 @@ public class CategorieEpreuveRepository {
 	
 	Connection connection = DBManager.getInstance().getConnection();
 	
+	
 	public void add(CategorieEpreuve categorieEpreuve) {
 	    String insertQuery = "insert into CategorieEpreuve (nom) VALUES ( '" + categorieEpreuve.getNom() + "')";
 	    try {
@@ -23,7 +24,28 @@ public class CategorieEpreuveRepository {
 	        e.printStackTrace();
 	    }
 	}
+	
+	public void update(CategorieEpreuve categorieEpreuve) {
+	    String insertQuery = "update CategorieEpreuve set nom = '" + categorieEpreuve.getNom() + "' where id = " + categorieEpreuve.getId();
+	    try {
+	    	connection.createStatement().execute(insertQuery);
+	    }
+	    catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
 
+	public void delete(int id) {
+		String insertQuery = "delete from CategorieEpreuve where id = " + id;
+		try {
+	    	connection.createStatement().execute(insertQuery);
+	    	EpreuveRepository epreuveRepository = new EpreuveRepository();
+	    	epreuveRepository.deleteFromCategorieEpreuve(id);
+	    }
+	    catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
 	
 	public List<CategorieEpreuve> findAll() {
 		
