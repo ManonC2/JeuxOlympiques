@@ -9,7 +9,7 @@
 	
 	<div class="d-flex justify-content-center">
 		
-		<form action="" method="get" class="m-5">
+		<form action="http://localhost:8080/JeuxOlympique/web/users/addUser" method="post" class="m-5">
 	  	<div class="form-group text-center">
 	  	
 	  	<label for="email">Entrez le courriel de l'utilisateur : </label>
@@ -17,9 +17,12 @@
 	    
 	    <label for="nom">Entrez le nom de l'utilisateur : </label>
 	    <input type="text" name="nom" id="nom" class="form-control" required />
-	    
+	    	
 	    <label for="prenom">Entrez le prénom de l'utilisateur : </label>
 	    <input type="text" name="prenom" id="prenom" class="form-control" required />
+	    
+	    <label for="password">Entrez le mot de passe de l'utilisateur : </label>
+	    <input type="password" id="password" name="password" class="form-control" required />
 	  
 	    <label for="role">Entrez le rôle de l'utilisateur : </label>
 	    <select id="role" name="role" class="form-control" required>

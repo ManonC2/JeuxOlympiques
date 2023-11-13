@@ -27,6 +27,15 @@ public class Utilisateur {
 		this.prenom = prenom;
 		this.role = role;
 	}
+		
+	public Utilisateur(String password, String email, String nom, String prenom, RoleUtilisateur role) {
+		super();
+		this.password = password;
+		this.email = email;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.role = role;
+	}	
 
 	public Utilisateur(int id, String password, RoleUtilisateur role) {
 		super();

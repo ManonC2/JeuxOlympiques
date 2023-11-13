@@ -14,7 +14,7 @@ public class UtilisateurRepository {
 	Connection connection = DBManager.getInstance().getConnection();
 	
 	public void add(Utilisateur utilisateur) {
-	    String insertQuery = "insert into Utilisateur (email, password, role_id) VALUES ( '" + utilisateur.getEmail() + "', '" + utilisateur.getPassword() + "', " + utilisateur.getRole().getId() + ")";
+	    String insertQuery = "insert into Utilisateur (email, password, nom, prenom, role_id) VALUES ( '" + utilisateur.getEmail() + "', '" + utilisateur.getPassword() + "','" + utilisateur.getNom() + "','"  + utilisateur.getPrenom()+"'," + utilisateur.getRole().getId() + ")";
 	    try {
 	    	connection.createStatement().execute(insertQuery);
 	    }

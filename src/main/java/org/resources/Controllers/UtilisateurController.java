@@ -2,6 +2,7 @@ package org.resources.Controllers;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ import com.mitchellbosecke.pebble.template.PebbleTemplate;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("/users")
 public class UtilisateurController {
@@ -93,6 +95,23 @@ public class UtilisateurController {
 		String output = writer.toString();
 		
 		return output;
+	}
+	
+	@POST
+	@Path("/addUser")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response enregistrerUsers(@FormParam("password") String password, @FormParam("email") String email,
+			@FormParam("nom") String nom, @FormParam("prenom") String prenom, @FormParam("role") int roleId) {
+
+		
+		RoleUtilisateur roleUser = roleUtilisateurRepository.findById(roleId);
+
+		Utilisateur user= new Utilisateur(password, email, nom, prenom, roleUser);
+
+		utilisateurRepository.add(user);
+
+		return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/users")).build();
+
 	}
 	
 	@GET
