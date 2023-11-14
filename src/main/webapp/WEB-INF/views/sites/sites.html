@@ -14,6 +14,7 @@
 				<th scope="col">Nom</th>
 				<th scope="col">Ville</th>
 				<th scope="col">Catégorie</th>
+				<th scope="col">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -23,6 +24,7 @@
 			      <td>{{ site.nom }}</td>
 			      <td>{{ site.ville }}</td>
 			      <td>{{ site.categorieSite.nom }}</td>
+			      <td><a class="btn btn-warning" href="http://localhost:8080/JeuxOlympique/web/sites/updateSite?id={{ site.id }}">Modifier</a> <a class="btn btn-danger">Supprimer</a></td>
 			     
 			{% endfor %}
 		</tbody>

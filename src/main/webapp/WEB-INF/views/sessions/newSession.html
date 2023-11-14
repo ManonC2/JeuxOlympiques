@@ -6,41 +6,51 @@
 	
 	<div class="d-flex justify-content-center">
 		
-		<form action="http://localhost:8080/JeuxOlympique/web/sessions/addSession" method="post" class="m-5">
-	  	<div class="form-group text-center">
+		{% if session is not empty%} <form action="http://localhost:8080/JeuxOlympique/web/sessions/addUpdatedSession?id={{session.id}}" method="post" class="m-5">{% endif %}
+		{% if session is empty%}<form action="http://localhost:8080/JeuxOlympique/web/sessions/addSession" method="post" class="m-5"> {% endif %}
+		<div class="form-group text-center">
+	    
 	    <label for="code">Entrez le code de la session : </label>
-	    <input type="text" name="code" id="code" class="form-control" required />
+	    <input type="text" name="code" id="code" class="form-control"{% if session is not empty%} value="{{session.code}}" {% endif %} required />
 	  
 	    <label for="date">Entrez la date de la session : </label>
-	    <input type="date" name="date" id="date" class="form-control" required />
+	    <input type="date" name="date" id="date" class="form-control" {% if session is not empty%} value="{{session.date}}" {% endif %}required />
 	  
 	    <label for="heureDebut">Entrez l'heure de début de la session : </label>
-	    <input type="time" name="heureDebut" id="heureDebut" class="form-control" required />
+	    <input type="time" name="heureDebut" id="heureDebut" class="form-control" {% if session is not empty%} value="{{session.heureDebut}}" {% endif %}required />
 	  
 	    <label for="heureFin">Entrez l'heure de fin de la session : </label>
-	    <input type="time" name="heureFin" id="heureFin" class="form-control" required />
+	    <input type="time" name="heureFin" id="heureFin" class="form-control" {% if session is not empty%} value="{{session.heureFin}}" {% endif %}required />
 	  
 	    <label for="description">Entrez la description de la session : </label>
-	    <input type="text" name="description" id="description" class="form-control" required />
+	    <input type="text" name="description" id="description" class="form-control" {% if session is not empty%} value="{{session.description}}" {% endif %}required />
 	  
-	    <label for="site">Entrez le site de la session : </label>
+	    <label for="session">Entrez le site de la session : </label>
 	    <select id="site" name="site" class="form-control" required>
-			{% for site in sites %}
-				<option value="{{ site.id }}" >{{ site.nom }}</option>
-			{% endfor %}
+			
+			{% if session is not empty%} 
+				{% for site in sites %}
+					<option value="{{ session.site.id }}" >{{ session.site.nom }}</option> {% endif %}
+				{% endfor %}
+			{% if session is empty%} 
+				{% for site in sites %}	
+					<option value="{{ site.id }}" >{{ site.nom }}</option> {% endif %}
+				{% endfor %}
 		</select>
 	  
 	    <label for="type">Entrez la type de la session : </label>
 	    <select id="type" name="type" class="form-control" required>
 			{% for typeSession in typeSessions %}
-				<option value="{{ typeSession.id }}" >{{ typeSession.nom }}</option>
+				{% if session is not empty%} <option value="{{ session.typeSession.id }}" >{{ session.typeSession.nom }}</option> {% endif %}
+			{% if session is empty%} <option value="{{ typeSession.id }}" >{{ typeSession.nom }}</option> {% endif %}
 			{% endfor %}
 		</select>
 	  
 	    <label for="epreuve">Entrez l'épreuve de la session : </label>
 	    <select id="epreuve" name="epreuve" class="form-control" required>
 			{% for epreuve in epreuves %}
-				<option value="{{ epreuve.id }}" >{{ epreuve.nom }} {{ epreuve.categorieEpreuve.nom }}</option>
+				{% if session is not empty%} <option value="{{ session.epreuve.id }}" >{{ session.epreuve.nom }}</option> {% endif %}
+			{% if session is empty%} <option value="{{ epreuve.id }}" >{{ epreuve.nom }}</option> {% endif %}
 			{% endfor %}
 		</select>
 	  

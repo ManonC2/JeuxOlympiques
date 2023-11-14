@@ -19,6 +19,7 @@
 				<th scope="col">Site</th>
 				<th scope="col">Type de session</th>
 				<th scope="col">Epreuve</th>
+				<th scope="col">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -33,6 +34,7 @@
 			      <td>{{ session.site.nom }}</td>
 			      <td>{{ session.typeSession.nom }}</td>
 			      <td>{{ session.epreuve.nom }}</td>
+			      <td><a class="btn btn-warning" href="http://localhost:8080/JeuxOlympique/web/sessions/updateSession?id={{ session.id }}">Modifier</a> <a class="btn btn-danger">Supprimer</a></td>
 			    </tr>
 			{% endfor %}
 		</tbody>

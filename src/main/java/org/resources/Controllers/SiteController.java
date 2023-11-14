@@ -23,6 +23,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -87,6 +88,53 @@ public class SiteController {
 
 		siteRepository.add(site);
 
+		return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/sites")).build();
+
+	}
+	
+	@GET
+	@Path("/updateSite")
+	@Consumes(MediaType.TEXT_PLAIN)
+	public String updateSite(@QueryParam("id") String id) {
+		
+		Site site = siteRepository.findById(Integer.parseInt(id));
+		
+		PebbleEngine engine = new PebbleEngine.Builder().build();
+		PebbleTemplate compiledTemplate = engine.getTemplate("WEB-INF/views/sites/newSite.html");
+
+		List<CategorieSite> listeCategoriesSites = categorieSiteRepository.findAll();
+
+		Map<String, Object> context = new HashMap<>();
+		context.put("categoriesSites", listeCategoriesSites);
+		context.put("site", site);
+
+		StringWriter writer = new StringWriter();
+
+		try {
+			compiledTemplate.evaluate(writer, context);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String output = writer.toString();
+
+		return output;
+
+	}
+	
+	@POST
+	@Path("/addUpdatedSite")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response addUpdateSite(@FormParam("nom") String nom, @FormParam("ville") String ville,
+			@FormParam("categorieSite") int categorieSiteId, @QueryParam("id") String id) {
+
+		CategorieSite categorieSite = categorieSiteRepository.findById(categorieSiteId);
+
+		Site site = new Site(Integer.parseInt(id), nom , ville, categorieSite);
+
+		siteRepository.update(site);
+		
 		return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/sites")).build();
 
 	}
