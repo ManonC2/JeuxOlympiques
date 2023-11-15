@@ -102,8 +102,9 @@ public class SessionController {
 		Date stringHeureFin;
 		Date stringDate;
 		try {
-			stringHeureDebut = (new SimpleDateFormat("yyyy-dd-MM HH:mm:ss")).parse(heureDebut);
-			stringHeureFin = (new SimpleDateFormat("yyyy-dd-MM HH:mm:ss")).parse(heureFin);
+			stringHeureDebut = (new SimpleDateFormat("yyyy-dd-MM HH:mm")).parse(date + " " + heureDebut);
+            stringHeureFin = (new SimpleDateFormat("yyyy-dd-MM HH:mm")).parse(date + " " + heureFin);
+
 			stringDate = (new SimpleDateFormat("yyyy-dd-MM")).parse(date);
 			Site site = siteRepository.findById(siteId);
 			TypeSession typeSession = typeSessionRepository.findById(typeSessionId);
