@@ -24,7 +24,7 @@
 			      <td>{{ site.nom }}</td>
 			      <td>{{ site.ville }}</td>
 			      <td>{{ site.categorieSite.nom }}</td>
-			      <td><a class="btn btn-warning" href="http://localhost:8080/JeuxOlympique/web/sites/updateSite?id={{ site.id }}">Modifier</a> <a class="btn btn-danger">Supprimer</a></td>
+			      <td><a class="btn btn-warning" href="http://localhost:8080/JeuxOlympique/web/sites/updateSite?id={{ site.id }}">Modifier</a> <a class="btn btn-danger" href="http://localhost:8080/JeuxOlympique/web/sites/delete?id={{ site.id }}">Supprimer</a></td>
 			     
 			{% endfor %}
 		</tbody>
