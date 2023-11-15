@@ -25,6 +25,7 @@ import com.mitchellbosecke.pebble.template.PebbleTemplate;
 
 import jakarta.ejb.Stateless;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -181,6 +182,16 @@ public class SessionController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/sessions")).build();
+	}
+	
+	@GET
+	@Path("/delete")
+	@Consumes(MediaType.TEXT_PLAIN)
+	public Response deleteSession(@QueryParam("id") String id) {
+		
+		sessionRepository.delete(Integer.parseInt(id));
+		
 		return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/sessions")).build();
 	}
 }

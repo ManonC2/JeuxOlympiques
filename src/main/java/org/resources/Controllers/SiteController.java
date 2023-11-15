@@ -138,4 +138,14 @@ public class SiteController {
 		return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/sites")).build();
 
 	}
+	
+	@GET
+	@Path("/delete")
+	@Consumes(MediaType.TEXT_PLAIN)
+	public Response delete(@QueryParam("id") String id) {
+		
+		siteRepository.delete(Integer.parseInt(id));
+		
+		return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/sites")).build();
+	}
 }

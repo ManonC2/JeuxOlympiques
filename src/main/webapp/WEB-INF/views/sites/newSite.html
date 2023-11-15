@@ -22,8 +22,7 @@
 	    <label for="categorieSite">Entrez le type du site : </label>
 	    <select id="categorieSite" name="categorieSite" class="form-control" required>
 			{% for categorieSite in categoriesSites %}
-			{% if site is not empty%} <option value="{{ site.categorieSite.id }}" >{{ site.categorieSite.nom }}</option> {% endif %}
-			{% if site is empty%} <option value="{{ categorieSite.id }}" >{{ categorieSite.nom }}</option> {% endif %}
+			<option value="{{ categorieSite.id }}" >{{ categorieSite.nom }}</option>
 			{% endfor %}
 		</select>
 		
