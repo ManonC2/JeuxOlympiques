@@ -15,6 +15,7 @@
 				<th scope="col">Discipline</th>
 				<th scope="col">Nom</th>
 				<th scope="col">Catégorie</th>
+				<th scope="col">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -24,7 +25,7 @@
 			      <td>{{ epreuve.discipline.nom }}</td>
 			      <td>{{ epreuve.nom }}</td>
 			      <td>{{ epreuve.categorieEpreuve.nom }}</td>
-			     
+			     <td><a class="btn btn-warning" href="http://localhost:8080/JeuxOlympique/web/epreuves/updateSite?id={{ epreuve.id }}">Modifier</a> <a class="btn btn-danger" href="http://localhost:8080/JeuxOlympique/web/epreuves/delete?id={{ epreuve.id }}">Supprimer</a></td>
 			{% endfor %}
 		</tbody>
 	</table>
