@@ -1,6 +1,7 @@
 package org.resources.Controllers;
 
 import java.io.IOException;
+
 import java.io.StringWriter;
 import java.net.URI;
 import java.text.ParseException;
@@ -135,8 +136,17 @@ public class SessionController {
 		List<TypeSession> listeTypeSession = typeSessionRepository.findAll();
 		List<Epreuve> listeEpreuves = epreuveRepository.findAll();
 		
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+	    
 
 		Map<String, Object> context = new HashMap<>();
+
+
+	    context.put("date", dateFormat.format(session.getDate()));
+	    context.put("heureDebut", timeFormat.format(session.getHeureDebut()));
+	    context.put("heureFin", timeFormat.format(session.getHeureFin()));
+		
 		context.put("sites", listeSites);
 		context.put("typeSessions", listeTypeSession);
 		context.put("epreuves", listeEpreuves);
@@ -162,22 +172,22 @@ public class SessionController {
 	@Path("/addUpdatedSession")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response addUpdateSession(@FormParam("code") String code, @FormParam("date") String date,
-			@FormParam("heureDebut") String heureDebut, @FormParam("heureFin") String heureFin,@FormParam("description") String description, @FormParam("site") int siteId, @FormParam("type") int typeSessionId, @FormParam("epreuve") int epreuveId) {
+			@FormParam("heureDebut") String heureDebut, @FormParam("heureFin") String heureFin,@FormParam("description") String description, @FormParam("site") int siteId, @FormParam("type") int typeSessionId, @FormParam("epreuve") int epreuveId, @QueryParam("id") String id) {
 
 		Date stringHeureDebut;
 		Date stringHeureFin;
 		Date stringDate;
 		try {
-			stringHeureDebut = (new SimpleDateFormat("yyyy-dd-MM HH:mm:ss")).parse(heureDebut);
-			stringHeureFin = (new SimpleDateFormat("yyyy-dd-MM HH:mm:ss")).parse(heureFin);
+			stringHeureDebut = (new SimpleDateFormat("yyyy-dd-MM HH:mm")).parse(date + " " + heureDebut);
+            stringHeureFin = (new SimpleDateFormat("yyyy-dd-MM HH:mm")).parse(date + " " + heureFin);
 			stringDate = (new SimpleDateFormat("yyyy-dd-MM")).parse(date);
 			Site site = siteRepository.findById(siteId);
 			TypeSession typeSession = typeSessionRepository.findById(typeSessionId);
 			Epreuve epreuve = epreuveRepository.findById(epreuveId);
 			
-			Session session = new Session(code, stringDate, stringHeureDebut, stringHeureFin, description, site, typeSession, epreuve);
+			Session session = new Session(Integer.parseInt(id), code, stringDate, stringHeureDebut, stringHeureFin, description, site, typeSession, epreuve);
 
-			sessionRepository.add(session);
+			sessionRepository.update(session);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

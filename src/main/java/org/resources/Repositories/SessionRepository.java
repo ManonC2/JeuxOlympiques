@@ -34,6 +34,7 @@ public class SessionRepository {
 	    String insertQuery = "update Session set code = '"+session.getCode()+"', date = '"+dateFormat.format(session.getDate())+"', heureDebut = '"+timeFormat.format(session.getHeureDebut())+"', heureFin = '"+timeFormat.format(session.getHeureFin())+"', description = '"+session.getDescription()+"', site_id = "+session.getSite().getId()+", typeSession_id = "+session.getTypeSession().getId()+", epreuve_id = "+session.getEpreuve().getId()+" WHERE id = " + session.getId();
 	    try {
 	    	connection.createStatement().execute(insertQuery);
+	    	System.out.println(insertQuery);
 	    }
 	    catch (SQLException e) {
 	        e.printStackTrace();
@@ -131,8 +132,8 @@ public class SessionRepository {
 			while(rs.next()) {
 				String code = rs.getString("code");
 				Date date = sdf.parse(rs.getString("date"));
-				Date heureDebut = new Date(sdf.parse(rs.getString("heureDebut")).getTime());
-				Date heureFin = new Date(sdf.parse(rs.getString("heureFin")).getTime());
+				Date heureDebut = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("heureDebut"));
+				Date heureFin = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("heureFin"));
 				String description = rs.getString("description");
 				
 				int siteId = Integer.parseInt(rs.getString("site_id"));

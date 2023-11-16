@@ -14,13 +14,13 @@
 	    <input type="text" name="code" id="code" class="form-control"{% if session is not empty%} value="{{session.code}}" {% endif %} required />
 	  
 	    <label for="date">Entrez la date de la session : </label>
-	    <input type="date" name="date" id="date" class="form-control" {% if session is not empty%} value="{{session.date}}" {% endif %}required />
+	    <input type="date" name="date" id="date" class="form-control" {% if session is not empty%} value="{{date}}" {% endif %}required />
 	  
 	    <label for="heureDebut">Entrez l'heure de début de la session : </label>
-	    <input type="time" name="heureDebut" id="heureDebut" class="form-control" {% if session is not empty%} value="{{session.heureDebut}}" {% endif %}required />
+	    <input type="time" name="heureDebut" id="heureDebut" class="form-control" {% if session is not empty%} value="{{ heureDebut }}" {% endif %}required />
 	  
 	    <label for="heureFin">Entrez l'heure de fin de la session : </label>
-	    <input type="time" name="heureFin" id="heureFin" class="form-control" {% if session is not empty%} value="{{session.heureFin}}" {% endif %}required />
+	    <input type="time" name="heureFin" id="heureFin" class="form-control" {% if session is not empty%} value="{{heureFin}}" {% endif %}required />
 	  
 	    <label for="description">Entrez la description de la session : </label>
 	    <input type="text" name="description" id="description" class="form-control" {% if session is not empty%} value="{{session.description}}" {% endif %}required />
