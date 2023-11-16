@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.resources.Models.CategorieEpreuve;
+import org.resources.Models.CategorieSite;
 import org.resources.Models.Discipline;
 import org.resources.Models.Epreuve;
 import org.resources.Models.RoleUtilisateur;
@@ -119,6 +120,53 @@ public class UtilisateurController {
 		Utilisateur user= new Utilisateur(hashedPassword, email, nom, prenom, roleUser);
 
 		utilisateurRepository.add(user);
+
+		return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/users")).build();
+
+	}
+	
+	@GET
+	@Path("/update")
+	@Consumes(MediaType.TEXT_PLAIN)
+	public String update(@QueryParam("id") String id) {
+		
+		Utilisateur user = utilisateurRepository.findById(Integer.parseInt(id));
+		
+		PebbleEngine engine = new PebbleEngine.Builder().build();
+		PebbleTemplate compiledTemplate = engine.getTemplate("WEB-INF/views/users/newUser.html");
+		
+		List<RoleUtilisateur> listeRolesUtilisateur = roleUtilisateurRepository.findAll();
+		
+		Map<String, Object> context = new HashMap<>();
+		context.put("roles", listeRolesUtilisateur);
+		context.put("user", user);
+		
+		StringWriter writer = new StringWriter();
+
+		try {
+			compiledTemplate.evaluate(writer, context);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		String output = writer.toString();
+		
+		return output;
+	}
+	
+	@POST
+	@Path("/addUpdatedUser")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response addUpdatedUser(@FormParam("password") String password, @FormParam("email") String email,
+			@FormParam("nom") String nom, @FormParam("prenom") String prenom, @FormParam("role") int roleId, @QueryParam("id") String id) {
+
+		RoleUtilisateur roleUser = roleUtilisateurRepository.findById(roleId);
+	    
+		Utilisateur user= new Utilisateur(Integer.parseInt(id), email, nom, prenom, roleUser);
+
+		utilisateurRepository.update(user);
 
 		return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/users")).build();
 

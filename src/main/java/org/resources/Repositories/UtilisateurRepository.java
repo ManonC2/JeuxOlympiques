@@ -24,7 +24,7 @@ public class UtilisateurRepository {
 	}
 	
 	public void update(Utilisateur utilisateur) {
-	    String insertQuery = "update Utilisateur set email = '" + utilisateur.getEmail() + "', password = " + utilisateur.getPassword() + ", role_id = "+ utilisateur.getRole().getId() + " where id = " + utilisateur.getId();
+	    String insertQuery = "update Utilisateur set email = '" + utilisateur.getEmail() + "', password = '" + utilisateur.getPassword() + "', nom = '" + utilisateur.getNom() + "', prenom = '" + utilisateur.getPrenom() + "', role_id = "+ utilisateur.getRole().getId() + " where id = " + utilisateur.getId();
 	    try {
 	    	connection.createStatement().execute(insertQuery);
 	    }
