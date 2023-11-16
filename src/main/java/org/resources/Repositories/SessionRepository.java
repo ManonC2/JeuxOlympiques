@@ -34,7 +34,6 @@ public class SessionRepository {
 	    String insertQuery = "update Session set code = '"+session.getCode()+"', date = '"+dateFormat.format(session.getDate())+"', heureDebut = '"+timeFormat.format(session.getHeureDebut())+"', heureFin = '"+timeFormat.format(session.getHeureFin())+"', description = '"+session.getDescription()+"', site_id = "+session.getSite().getId()+", typeSession_id = "+session.getTypeSession().getId()+", epreuve_id = "+session.getEpreuve().getId()+" WHERE id = " + session.getId();
 	    try {
 	    	connection.createStatement().execute(insertQuery);
-	    	System.out.println(insertQuery);
 	    }
 	    catch (SQLException e) {
 	        e.printStackTrace();

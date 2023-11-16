@@ -131,4 +131,14 @@ public class UtilisateurController {
 		
 		return "ok";
 	}
+	
+	@GET
+	@Path("/delete")
+	@Consumes(MediaType.TEXT_PLAIN)
+	public Response delete(@QueryParam("id") String id) {
+		
+		utilisateurRepository.delete(Integer.parseInt(id));
+		
+		return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/users")).build();
+	}
 }
