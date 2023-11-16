@@ -1,6 +1,7 @@
 package org.resources.Controllers;
 
 import java.io.IOException;
+
 import java.io.StringWriter;
 import java.net.URI;
 import java.util.HashMap;
@@ -21,8 +22,12 @@ import org.resources.Repositories.EpreuveRepository;
 import org.resources.Repositories.RoleUtilisateurRepository;
 import org.resources.Repositories.UtilisateurRepository;
 
+
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
+
+import at.favre.lib.crypto.bcrypt.BCrypt;
+import at.favre.lib.crypto.bcrypt.BCrypt.Hasher;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -105,8 +110,13 @@ public class UtilisateurController {
 
 		
 		RoleUtilisateur roleUser = roleUtilisateurRepository.findById(roleId);
+		
+	    Hasher hasher = BCrypt.withDefaults();
+	    String hashedPassword = hasher.hashToString(12, password.toCharArray());
 
-		Utilisateur user= new Utilisateur(password, email, nom, prenom, roleUser);
+	    
+	    
+		Utilisateur user= new Utilisateur(hashedPassword, email, nom, prenom, roleUser);
 
 		utilisateurRepository.add(user);
 
