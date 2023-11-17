@@ -112,4 +112,28 @@ public class UtilisateurRepository {
 		}
 		return null;
 	}
+	
+	@Asynchronous
+	public Utilisateur findByEmailPassword(String mail, String password) {
+		Statement statement;
+		try {
+			statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("select * from Utilisateur where email = '" + mail + "', password = '" + password + "'");
+			
+			while(rs.next()) {
+				int id = Integer.parseInt(rs.getString("id"));
+				String email = rs.getString("email");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				int roleUtilisateurId = Integer.parseInt(rs.getString("role_id"));
+				RoleUtilisateurRepository roleUtilisateurRepo = new RoleUtilisateurRepository();
+				return new Utilisateur(id, email, nom, prenom, roleUtilisateurRepo.findById(roleUtilisateurId));
+			}
+		}
+		catch(SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

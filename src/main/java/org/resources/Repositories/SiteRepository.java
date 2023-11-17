@@ -126,4 +126,29 @@ Connection connection = DBManager.getInstance().getConnection();
 		}
 		return null;
 	}
+	
+	
+	@Asynchronous
+	public List<Site> findSitesWithLotOfSessions() {
+		
+		List<Site> liste = new ArrayList<Site>();
+		
+		Statement statement;
+		try {
+			statement = connection.createStatement();
+			
+			ResultSet rs = statement.executeQuery("SELECT s.id COUNT(*) AS nombre_sessions FROM Site s JOIN Session se ON s.id = se.site_id GROUP BY s.id, s.nom, s.ville ORDER BY nombre_sessions DESC LIMIT 5;");
+			
+			while(rs.next()) {
+				int id = Integer.parseInt(rs.getString("id"));
+				liste.add(findById(id));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return liste;
+		
+	}
 }
