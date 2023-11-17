@@ -10,9 +10,14 @@ import java.util.List;
 import org.assets.DBManager;
 import org.resources.Models.Site;
 
+import jakarta.ejb.Asynchronous;
+import jakarta.ejb.Stateless;
+
+@Stateless
 public class SiteRepository {
 Connection connection = DBManager.getInstance().getConnection();
 	
+	@Asynchronous
 	public void add(Site site) {
 	    String insertQuery = "insert into Site (nom, ville, categorie_id) VALUES ( '" + site.getNom() + "', '" + site.getVille() + "', " + site.getCategorieSite().getId() + ")";
 	    try {
@@ -23,6 +28,7 @@ Connection connection = DBManager.getInstance().getConnection();
 	    }
 	}
 	
+	@Asynchronous
 	public void update(Site site) {
 	    String insertQuery = "update Site set nom = '" + site.getNom() + "', ville = '" + site.getVille() + "' where id = " + site.getId();
 	    try {
@@ -33,6 +39,7 @@ Connection connection = DBManager.getInstance().getConnection();
 	    }
 	}
 	
+	@Asynchronous
 	public void delete(int id) {
 		String insertQuery = "delete from Site where id = " + id;
 		try {
@@ -45,6 +52,7 @@ Connection connection = DBManager.getInstance().getConnection();
 	    }
 	}
 
+	@Asynchronous
 	public void deleteFromCategorieSite(int categorieSite_id) {
 		String insertQuery = "delete from Site where categorie_id = " + categorieSite_id;
 		Statement statement;
@@ -65,6 +73,7 @@ Connection connection = DBManager.getInstance().getConnection();
 	    }
 	}
 
+	@Asynchronous
 	public List<Site> findAll() {
 		
 		List<Site> liste = new ArrayList<Site>();
@@ -94,6 +103,7 @@ Connection connection = DBManager.getInstance().getConnection();
 		
 	}
 	
+	@Asynchronous
 	public Site findById(int id) {
 		Statement statement;
 		try {

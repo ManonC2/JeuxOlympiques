@@ -1,6 +1,7 @@
 package org.resources.Repositories;
 
 import java.sql.Connection;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,11 +10,16 @@ import java.util.List;
 
 import org.assets.DBManager;
 import org.resources.Models.Discipline;
+
+import jakarta.ejb.Asynchronous;
+import jakarta.ejb.Stateless;
+
+@Stateless
 public class DisciplineRepository {
 	
 	Connection connection = DBManager.getInstance().getConnection();
 	
-	
+	@Asynchronous
 	public void add(Discipline discipline) {
 	    String insertQuery = "insert into Discipline (nom, paralympique) VALUES ( '" + discipline.getNom() + "', "+ discipline.isParalympique() +")";
 	    try {
@@ -24,6 +30,7 @@ public class DisciplineRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void update(Discipline discipline) {
 	    String insertQuery = "update Discipline set nom = '" + discipline.getNom() + "', paralympique = "+ discipline.isParalympique() +" where id = " + discipline.getId();
 	    try {
@@ -34,6 +41,7 @@ public class DisciplineRepository {
 	    }
 	}
 
+	@Asynchronous
 	public void delete(int id) {
 		String insertQuery = "delete from Discipline where id = " + id;
 		try {
@@ -46,6 +54,7 @@ public class DisciplineRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public Discipline findById(int id) {
 		
 		Statement statement;
@@ -68,6 +77,7 @@ public class DisciplineRepository {
 		return null;
 	}
 	
+	@Asynchronous
 	public List<Discipline> findAll() {
 		
 		List<Discipline> liste = new ArrayList<Discipline>();

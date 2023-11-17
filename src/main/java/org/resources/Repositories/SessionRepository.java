@@ -13,9 +13,14 @@ import java.util.List;
 import org.assets.DBManager;
 import org.resources.Models.Session;
 
+import jakarta.ejb.Asynchronous;
+import jakarta.ejb.Stateless;
+
+@Stateless
 public class SessionRepository {
 	Connection connection = DBManager.getInstance().getConnection();
 
+	@Asynchronous
 	public void add(Session session) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
@@ -28,6 +33,7 @@ public class SessionRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void update(Session session) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
@@ -40,6 +46,7 @@ public class SessionRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void delete(int id) {
 		String insertQuery = "delete from Session where id = " + id;
 		try {
@@ -50,6 +57,7 @@ public class SessionRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void deleteFromTypeSession(int typeSession_id) {
 		String insertQuery = "delete from Session where typeSession_id = " + typeSession_id;
 		try {
@@ -60,6 +68,7 @@ public class SessionRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void deleteFromEpreuve(int epreuve_id) {
 		String insertQuery = "delete from Session where epreuve_id = " + epreuve_id;
 		try {
@@ -70,6 +79,7 @@ public class SessionRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void deleteFromSite(int site_id) {
 		String insertQuery = "delete from Session where site_id = " + site_id;
 		try {
@@ -80,6 +90,7 @@ public class SessionRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public List<Session> findAll() {
 		
 		List<Session> liste = new ArrayList<Session>();
@@ -121,6 +132,7 @@ public class SessionRepository {
 		
 	}
 	
+	@Asynchronous
 	public Session findById(int id) {
 		Statement statement;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

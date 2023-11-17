@@ -9,12 +9,15 @@ import java.util.List;
 import org.assets.DBManager;
 import org.resources.Models.CategorieEpreuve;
 
+import jakarta.ejb.Asynchronous;
+import jakarta.ejb.Stateless;
 
+@Stateless
 public class CategorieEpreuveRepository {
 	
 	Connection connection = DBManager.getInstance().getConnection();
 	
-	
+	@Asynchronous
 	public void add(CategorieEpreuve categorieEpreuve) {
 	    String insertQuery = "insert into CategorieEpreuve (nom) VALUES ( '" + categorieEpreuve.getNom() + "')";
 	    try {
@@ -25,6 +28,7 @@ public class CategorieEpreuveRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void update(CategorieEpreuve categorieEpreuve) {
 	    String insertQuery = "update CategorieEpreuve set nom = '" + categorieEpreuve.getNom() + "' where id = " + categorieEpreuve.getId();
 	    try {
@@ -35,6 +39,7 @@ public class CategorieEpreuveRepository {
 	    }
 	}
 
+	@Asynchronous
 	public void delete(int id) {
 		String insertQuery = "delete from CategorieEpreuve where id = " + id;
 		try {
@@ -47,6 +52,7 @@ public class CategorieEpreuveRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public List<CategorieEpreuve> findAll() {
 		
 		List<CategorieEpreuve> liste = new ArrayList<CategorieEpreuve>();
@@ -73,6 +79,7 @@ public class CategorieEpreuveRepository {
 		
 	}
 	
+	@Asynchronous
 	public CategorieEpreuve findById(int id) {
 		Statement statement;
 		try {

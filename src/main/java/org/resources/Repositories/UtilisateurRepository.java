@@ -10,9 +10,14 @@ import java.util.List;
 import org.assets.DBManager;
 import org.resources.Models.Utilisateur;
 
+import jakarta.ejb.Asynchronous;
+import jakarta.ejb.Stateless;
+
+@Stateless
 public class UtilisateurRepository {
 	Connection connection = DBManager.getInstance().getConnection();
 	
+	@Asynchronous
 	public void add(Utilisateur utilisateur) {
 	    String insertQuery = "insert into Utilisateur (email, password, nom, prenom, role_id) VALUES ( '" + utilisateur.getEmail() + "', '" + utilisateur.getPassword() + "','" + utilisateur.getNom() + "','"  + utilisateur.getPrenom()+"'," + utilisateur.getRole().getId() + ")";
 	    try {
@@ -23,6 +28,7 @@ public class UtilisateurRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void update(Utilisateur utilisateur) {
 	    String insertQuery = "update Utilisateur set email = '" + utilisateur.getEmail() + "', password = '" + utilisateur.getPassword() + "', nom = '" + utilisateur.getNom() + "', prenom = '" + utilisateur.getPrenom() + "', role_id = "+ utilisateur.getRole().getId() + " where id = " + utilisateur.getId();
 	    try {
@@ -33,6 +39,7 @@ public class UtilisateurRepository {
 	    }
 	}
 
+	@Asynchronous
 	public void delete(int id) {
 		String insertQuery = "delete from Utilisateur where id = " + id;
 		try {
@@ -43,6 +50,7 @@ public class UtilisateurRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void deleteFromRole(int role_id) {
 		String insertQuery = "delete from Utilisateur where role_id = " + role_id;
 		try {
@@ -53,6 +61,7 @@ public class UtilisateurRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public List<Utilisateur> findAll() {
 		
 		List<Utilisateur> liste = new ArrayList<Utilisateur>();
@@ -81,6 +90,7 @@ public class UtilisateurRepository {
 		
 	}
 	
+	@Asynchronous
 	public Utilisateur findById(int id) {
 		Statement statement;
 		try {

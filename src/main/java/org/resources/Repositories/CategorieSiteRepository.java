@@ -10,10 +10,14 @@ import java.util.List;
 import org.assets.DBManager;
 import org.resources.Models.CategorieSite;
 
+import jakarta.ejb.Asynchronous;
+import jakarta.ejb.Stateless;
+
+@Stateless
 public class CategorieSiteRepository {
 	Connection connection = DBManager.getInstance().getConnection();
 	
-	
+	@Asynchronous
 	public void add(CategorieSite categorieSite) {
 	    String insertQuery = "insert into CategorieSite (nom) VALUES ( '" + categorieSite.getNom() + "')";
 	    try {
@@ -24,6 +28,7 @@ public class CategorieSiteRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void update(CategorieSite categorieSite) {
 	    String insertQuery = "update CategorieSite set nom = '" + categorieSite.getNom() + "' where id = " + categorieSite.getId();
 	    try {
@@ -34,6 +39,7 @@ public class CategorieSiteRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void delete(int id) {
 		String insertQuery = "delete from CategorieSite where id = " + id;
 		try {
@@ -46,6 +52,7 @@ public class CategorieSiteRepository {
 	    }
 	}
 
+	@Asynchronous
 	public List<CategorieSite> findAll() {
 		
 		List<CategorieSite> liste = new ArrayList<CategorieSite>();
@@ -69,6 +76,7 @@ public class CategorieSiteRepository {
 		
 	}
 	
+	@Asynchronous
 	public CategorieSite findById(int id) {
 		Statement statement;
 		try {

@@ -10,11 +10,16 @@ import java.util.List;
 import org.assets.DBManager;
 import org.resources.Models.*;
 
+import jakarta.ejb.Asynchronous;
+import jakarta.ejb.Stateless;
+
+@Stateless
 public class EpreuveRepository {
 	
 
 	Connection connection = DBManager.getInstance().getConnection();
 	
+	@Asynchronous
 	public void add(Epreuve epreuve) {
 	    String insertQuery = "insert into Epreuve (nom, discipline_id, categorieEpreuve_id) VALUES ( '" + epreuve.getNom() + "'," + epreuve.getDiscipline().getId() + ", "+ epreuve.getCategorieEpreuve().getId() +")";
 	    try {
@@ -25,6 +30,7 @@ public class EpreuveRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void update(Epreuve epreuve) {
 	    String insertQuery = "update Epreuve set nom = '" + epreuve.getNom() + "', discipline_id = " + epreuve.getDiscipline().getId() + ", categorieEpreuve_id = "+ epreuve.getCategorieEpreuve().getId() + " where id = " + epreuve.getId();
 	    try {
@@ -35,6 +41,7 @@ public class EpreuveRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void delete(int id) {
 		String insertQuery = "delete from Epreuve where id = " + id;
 		try {
@@ -47,6 +54,7 @@ public class EpreuveRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void deleteFromCategorieEpreuve(int categorieEpreuve_id) {
 		String insertQuery = "delete from Epreuve where categorieEpreuve_id = " + categorieEpreuve_id;
 		Statement statement;
@@ -66,6 +74,7 @@ public class EpreuveRepository {
 	    }
 	}
 
+	@Asynchronous
 	public void deleteFromDiscipline(int discipline_id) {
 		String insertQuery = "delete from Epreuve where discipline_id = " + discipline_id;
 		Statement statement;
@@ -114,6 +123,7 @@ public class EpreuveRepository {
 		
 	}
 	
+	@Asynchronous
 	public Epreuve findById(int id) {
 		
 		Statement statement;
