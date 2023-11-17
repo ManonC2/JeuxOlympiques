@@ -17,6 +17,7 @@ import org.resources.Repositories.EpreuveRepository;
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
 
+import jakarta.ejb.Asynchronous;
 import jakarta.ejb.Stateless;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -29,6 +30,7 @@ public class EpreuveController {
 	DisciplineRepository disciplineRepository = new DisciplineRepository();
 	CategorieEpreuveRepository categorieEpreuveRepository = new CategorieEpreuveRepository();
 	
+	@Asynchronous
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	@Path("/")
@@ -50,6 +52,7 @@ public class EpreuveController {
 		return output;
 	}
 	
+	@Asynchronous
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	@Path("/newEpreuve")
@@ -76,6 +79,7 @@ public class EpreuveController {
 		return output;
 	}
 	
+	@Asynchronous
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	@Path("/newDiscipline")
@@ -97,6 +101,7 @@ public class EpreuveController {
 		return output;
 	}
 	
+	@Asynchronous
 	@POST
 	@Path("/addEpreuve")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -114,6 +119,7 @@ public class EpreuveController {
 
 	}
 	
+	@Asynchronous
 	@POST
 	@Path("/addDiscipline")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -127,6 +133,7 @@ public class EpreuveController {
 
 	}
 	
+	@Asynchronous
 	@GET
 	@Path("/delete")
 	@Consumes(MediaType.TEXT_PLAIN)

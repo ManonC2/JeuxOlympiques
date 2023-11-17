@@ -24,6 +24,7 @@ import org.resources.Repositories.TypeSessionRepository;
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
 
+import jakarta.ejb.Asynchronous;
 import jakarta.ejb.Stateless;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -44,6 +45,7 @@ public class SessionController {
 	TypeSessionRepository typeSessionRepository = new TypeSessionRepository();
 	EpreuveRepository epreuveRepository = new EpreuveRepository();
 	
+	@Asynchronous
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	@Path("/")
@@ -66,6 +68,7 @@ public class SessionController {
 		return output;
 	}
 	
+	@Asynchronous
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	@Path("/newSession")
@@ -93,6 +96,7 @@ public class SessionController {
 		return output;
 	}
 	
+	@Asynchronous
 	@POST
 	@Path("/addSession")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -122,6 +126,7 @@ public class SessionController {
 		return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/sessions")).build();
 	}
 	
+	@Asynchronous
 	@GET
 	@Path("/updateSession")
 	@Consumes(MediaType.TEXT_PLAIN)
@@ -168,6 +173,7 @@ public class SessionController {
 
 	}
 	
+	@Asynchronous
 	@POST
 	@Path("/addUpdatedSession")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -196,6 +202,7 @@ public class SessionController {
 		return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/sessions")).build();
 	}
 	
+	@Asynchronous
 	@GET
 	@Path("/delete")
 	@Consumes(MediaType.TEXT_PLAIN)

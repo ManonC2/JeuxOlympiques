@@ -16,6 +16,7 @@ import org.resources.Repositories.SiteRepository;
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
 
+import jakarta.ejb.Asynchronous;
 import jakarta.ejb.Stateless;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
@@ -34,6 +35,7 @@ public class SiteController {
 	SiteRepository siteRepository = new SiteRepository();
 	CategorieSiteRepository categorieSiteRepository = new CategorieSiteRepository();
 
+	@Asynchronous
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	@Path("/")
@@ -55,6 +57,7 @@ public class SiteController {
 		return output;
 	}
 
+	@Asynchronous
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	@Path("/newSite")
@@ -76,6 +79,7 @@ public class SiteController {
 		return output;
 	}
 
+	@Asynchronous
 	@POST
 	@Path("/addSite")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -92,6 +96,7 @@ public class SiteController {
 
 	}
 	
+	@Asynchronous
 	@GET
 	@Path("/updateSite")
 	@Consumes(MediaType.TEXT_PLAIN)
@@ -123,6 +128,7 @@ public class SiteController {
 
 	}
 	
+	@Asynchronous
 	@POST
 	@Path("/addUpdatedSite")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -139,6 +145,7 @@ public class SiteController {
 
 	}
 	
+	@Asynchronous
 	@GET
 	@Path("/delete")
 	@Consumes(MediaType.TEXT_PLAIN)

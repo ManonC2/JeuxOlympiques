@@ -29,16 +29,19 @@ import com.mitchellbosecke.pebble.template.PebbleTemplate;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import at.favre.lib.crypto.bcrypt.BCrypt.Hasher;
-
+import jakarta.ejb.Asynchronous;
+import jakarta.ejb.Stateless;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+@Stateless
 @Path("/users")
 public class UtilisateurController {
 	UtilisateurRepository utilisateurRepository = new UtilisateurRepository();
 	RoleUtilisateurRepository roleUtilisateurRepository = new RoleUtilisateurRepository();
 	
+	@Asynchronous
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	@Path("/")
@@ -62,6 +65,7 @@ public class UtilisateurController {
 		return output;
 	}
 	
+	@Asynchronous
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	@Path("/connexion")
@@ -81,6 +85,7 @@ public class UtilisateurController {
 		return output;
 	}
 	
+	@Asynchronous
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	@Path("/newUser")
@@ -103,6 +108,7 @@ public class UtilisateurController {
 		return output;
 	}
 	
+	@Asynchronous
 	@POST
 	@Path("/addUser")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -125,6 +131,7 @@ public class UtilisateurController {
 
 	}
 	
+	@Asynchronous
 	@GET
 	@Path("/update")
 	@Consumes(MediaType.TEXT_PLAIN)
@@ -156,6 +163,7 @@ public class UtilisateurController {
 		return output;
 	}
 	
+	@Asynchronous
 	@POST
 	@Path("/addUpdatedUser")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -172,6 +180,7 @@ public class UtilisateurController {
 
 	}
 	
+	@Asynchronous
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/deconnexion")
@@ -180,6 +189,7 @@ public class UtilisateurController {
 		return "ok";
 	}
 	
+	@Asynchronous
 	@GET
 	@Path("/delete")
 	@Consumes(MediaType.TEXT_PLAIN)
