@@ -137,7 +137,7 @@ Connection connection = DBManager.getInstance().getConnection();
 		try {
 			statement = connection.createStatement();
 			
-			ResultSet rs = statement.executeQuery("SELECT s.id COUNT(*) AS nombre_sessions FROM Site s JOIN Session se ON s.id = se.site_id GROUP BY s.id, s.nom, s.ville ORDER BY nombre_sessions DESC LIMIT 5;");
+			ResultSet rs = statement.executeQuery("SELECT s.id, COUNT(*) AS nombre_sessions FROM Site s JOIN Session se ON s.id = se.site_id GROUP BY s.id, s.nom, s.ville ORDER BY nombre_sessions DESC LIMIT 5;");
 			
 			while(rs.next()) {
 				int id = Integer.parseInt(rs.getString("id"));

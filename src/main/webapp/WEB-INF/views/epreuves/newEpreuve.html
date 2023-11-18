@@ -6,11 +6,12 @@
 	
 	<div class="d-flex justify-content-center">
 		
-		<form action="http://localhost:8080/JeuxOlympique/web/epreuves/addEpreuve" method="post" class="m-5">
-	  	<div class="form-group text-center">
+		{% if epreuve is not empty%} <form action="http://localhost:8080/JeuxOlympique/web/epreuves/addUpdatedEpreuve?id={{epreuve.id}}" method="post" class="m-5">{% endif %}
+		{% if epreuve is empty%}<form action="http://localhost:8080/JeuxOlympique/web/epreuves/addEpreuve" method="post" class="m-5"> {% endif %}
+		<div class="form-group text-center">
 			  
 	    <label for="nom">Entrez le nom de l'épreuve : </label>
-	    <input type="text" name="nom" id="nom" class="form-control" required />
+	    <input type="text" name="nom" id="nom" class="form-control" value="{{epreuve.nom}}" required />
 	  
 	    <label for="discipline">Entrez la discipline de l'épreuve : </label>
 	    <select id="discipline" name="discipline" class="form-control" required>
@@ -25,10 +26,13 @@
 				<option value="{{ categorie.id }}" >{{ categorie.nom }}</option>
 			{% endfor %}
 		</select>
+	
+        <label for="collectif">Epreuve collective ? </label>
+        <input type="checkbox" name="collectif" id="collectif" class="form-control" value="{{epreuve.collectif}}" />
 	  
 	    <div class="d-flex justify-content-around mt-4">
 			    <button type="submit" class="btn btn-success" value="Enregistrer la session">Enregistrer</button>
-			    <a href="http://localhost:8080/JeuxOlympique/web/sessions/"><button class="btn btn-primary">Retour</button></a>
+			    <a href="http://localhost:8080/JeuxOlympique/web/epreuves/"><button class="btn btn-primary">Retour</button></a>
 		  </div>
 		  
 	  </div>

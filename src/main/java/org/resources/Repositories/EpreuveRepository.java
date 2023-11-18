@@ -21,7 +21,8 @@ public class EpreuveRepository {
 	
 	@Asynchronous
 	public void add(Epreuve epreuve) {
-	    String insertQuery = "insert into Epreuve (nom, discipline_id, categorieEpreuve_id) VALUES ( '" + epreuve.getNom() + "'," + epreuve.getDiscipline().getId() + ", "+ epreuve.getCategorieEpreuve().getId() +")";
+	    String insertQuery = "insert into Epreuve (nom, discipline_id, categorieEpreuve_id, collectif) VALUES ( '" + epreuve.getNom() + "'," + epreuve.getDiscipline().getId() + ", "+ epreuve.getCategorieEpreuve().getId() +", " + (epreuve.getCollectif() ? 1 : 0 ) + ")";
+	    System.out.println(insertQuery);
 	    try {
 	    	connection.createStatement().execute(insertQuery);
 	    }
@@ -32,7 +33,7 @@ public class EpreuveRepository {
 	
 	@Asynchronous
 	public void update(Epreuve epreuve) {
-	    String insertQuery = "update Epreuve set nom = '" + epreuve.getNom() + "', discipline_id = " + epreuve.getDiscipline().getId() + ", categorieEpreuve_id = "+ epreuve.getCategorieEpreuve().getId() + " where id = " + epreuve.getId();
+	    String insertQuery = "update Epreuve set nom = '" + epreuve.getNom() + "', discipline_id = " + epreuve.getDiscipline().getId() + ", categorieEpreuve_id = "+ epreuve.getCategorieEpreuve().getId() + ", collectif = " + (epreuve.getCollectif() ? 1 : 0 ) + " where id = " + epreuve.getId() + ";";
 	    try {
 	    	connection.createStatement().execute(insertQuery);
 	    }
@@ -108,11 +109,12 @@ public class EpreuveRepository {
 				String nom = rs.getString("nom");
 				int disciplineId = Integer.parseInt(rs.getString("discipline_id"));
 				int categorieEpreuveId = Integer.parseInt(rs.getString("categorieEpreuve_id"));
+				boolean collectif = (Integer.parseInt(rs.getString("collectif")) == 1) ? true : false;
 				
 				DisciplineRepository disciplineRepo = new DisciplineRepository();
 				CategorieEpreuveRepository categorieEpreuveRepo = new CategorieEpreuveRepository();
 				
-				liste.add(new Epreuve(id, nom, disciplineRepo.findById(disciplineId), categorieEpreuveRepo.findById(categorieEpreuveId)));
+				liste.add(new Epreuve(id, nom, disciplineRepo.findById(disciplineId), categorieEpreuveRepo.findById(categorieEpreuveId), collectif));
 			}
 			
 		} catch (SQLException e) {
@@ -122,6 +124,73 @@ public class EpreuveRepository {
 		return liste;
 		
 	}
+	
+	public List<Epreuve> findEpreuveWeight() {
+		
+		List<Epreuve> liste = new ArrayList<Epreuve>();
+		
+		Statement statement;
+		try {
+			statement = connection.createStatement();
+			
+			ResultSet rs = statement.executeQuery("SELECT nom FROM Epreuve WHERE nom LIKE '%kg%';");
+			
+			while(rs.next()) {
+				int id = Integer.parseInt(rs.getString("id"));				
+				liste.add(findById(id));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return liste;
+		
+	}
+	
+	public List<Epreuve> findEpreuveIndividual() {
+		
+		List<Epreuve> liste = new ArrayList<Epreuve>();
+		
+		Statement statement;
+		try {
+			statement = connection.createStatement();
+			
+			ResultSet rs = statement.executeQuery("SELECT * FROM Epreuve WHERE collectif = false;");
+			
+			while(rs.next()) {
+				int id = Integer.parseInt(rs.getString("id"));				
+				liste.add(findById(id));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return liste;
+	}
+	
+	public List<Epreuve> findEpreuveGroup() {
+		List<Epreuve> liste = new ArrayList<Epreuve>();
+		
+		Statement statement;
+		try {
+			statement = connection.createStatement();
+			
+			ResultSet rs = statement.executeQuery("SELECT * FROM Epreuve WHERE collectif = true;");
+			
+			while(rs.next()) {
+				int id = Integer.parseInt(rs.getString("id"));				
+				liste.add(findById(id));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return liste;
+	}
+	
 	
 	@Asynchronous
 	public Epreuve findById(int id) {
@@ -136,11 +205,12 @@ public class EpreuveRepository {
 				String nom = rs.getString("nom");
 				int disciplineId = Integer.parseInt(rs.getString("discipline_id"));
 				int categorieEpreuveId = Integer.parseInt(rs.getString("categorieEpreuve_id"));
+				boolean collectif = (Integer.parseInt(rs.getString("collectif")) == 1) ? true : false;
 				
 				DisciplineRepository disciplineRepo = new DisciplineRepository();
 				CategorieEpreuveRepository categorieEpreuveRepo = new CategorieEpreuveRepository();
 				
-				return new Epreuve(id, nom, disciplineRepo.findById(disciplineId), categorieEpreuveRepo.findById(categorieEpreuveId));
+				return new Epreuve(id, nom, disciplineRepo.findById(disciplineId), categorieEpreuveRepo.findById(categorieEpreuveId), collectif);
 			}
 			
 		} catch (SQLException e) {

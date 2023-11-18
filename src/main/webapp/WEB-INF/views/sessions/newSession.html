@@ -11,7 +11,7 @@
 		<div class="form-group text-center">
 	    
 	    <label for="code">Entrez le code de la session : </label>
-	    <input type="text" name="code" id="code" class="form-control"{% if session is not empty%} value="{{session.code}}" {% endif %} required />
+	    <input type="text" name="code" id="code" pattern="[A-Z]{3}\d{2}" class="form-control"{% if session is not empty%} value="{{session.code}}" {% endif %} required />
 	  
 	    <label for="date">Entrez la date de la session : </label>
 	    <input type="date" name="date" id="date" class="form-control" {% if session is not empty%} value="{{date}}" {% endif %}required />

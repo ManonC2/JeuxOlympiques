@@ -2,6 +2,7 @@ package org.resources.Controllers;
 
 import java.io.IOException;
 
+
 import java.io.StringWriter;
 import java.net.URI;
 import java.text.ParseException;
@@ -36,6 +37,9 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Stateless
 @Path("/sessions")
@@ -103,26 +107,33 @@ public class SessionController {
 	public Response enregistrer(@FormParam("code") String code, @FormParam("date") String date,
 			@FormParam("heureDebut") String heureDebut, @FormParam("heureFin") String heureFin,@FormParam("description") String description, @FormParam("site") int siteId, @FormParam("type") int typeSessionId, @FormParam("epreuve") int epreuveId) {
 
-		Date stringHeureDebut;
-		Date stringHeureFin;
-		Date stringDate;
-		try {
-			stringHeureDebut = (new SimpleDateFormat("yyyy-dd-MM HH:mm")).parse(date + " " + heureDebut);
-            stringHeureFin = (new SimpleDateFormat("yyyy-dd-MM HH:mm")).parse(date + " " + heureFin);
+		
+        String regex = "^[A-Z]{3}\\d{2}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(code);
 
-			stringDate = (new SimpleDateFormat("yyyy-dd-MM")).parse(date);
-			Site site = siteRepository.findById(siteId);
-			TypeSession typeSession = typeSessionRepository.findById(typeSessionId);
-			Epreuve epreuve = epreuveRepository.findById(epreuveId);
-			
-			Session session = new Session(code, stringDate, stringHeureDebut, stringHeureFin, description, site, typeSession, epreuve);
+        if (matcher.matches()) {
+    		Date stringHeureDebut;
+    		Date stringHeureFin;
+    		Date stringDate;
+    		try {
+    			stringHeureDebut = (new SimpleDateFormat("yyyy-dd-MM HH:mm")).parse(date + " " + heureDebut);
+                stringHeureFin = (new SimpleDateFormat("yyyy-dd-MM HH:mm")).parse(date + " " + heureFin);
 
-			sessionRepository.add(session);
+    			stringDate = (new SimpleDateFormat("yyyy-dd-MM")).parse(date);
+    			Site site = siteRepository.findById(siteId);
+    			TypeSession typeSession = typeSessionRepository.findById(typeSessionId);
+    			Epreuve epreuve = epreuveRepository.findById(epreuveId);
+    			
+    			Session session = new Session(code, stringDate, stringHeureDebut, stringHeureFin, description, site, typeSession, epreuve);
 
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    			sessionRepository.add(session);
+
+    		} catch (ParseException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}        
+        }
 		return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/sessions")).build();
 	}
 	
@@ -180,24 +191,30 @@ public class SessionController {
 	public Response addUpdateSession(@FormParam("code") String code, @FormParam("date") String date,
 			@FormParam("heureDebut") String heureDebut, @FormParam("heureFin") String heureFin,@FormParam("description") String description, @FormParam("site") int siteId, @FormParam("type") int typeSessionId, @FormParam("epreuve") int epreuveId, @QueryParam("id") String id) {
 
-		Date stringHeureDebut;
-		Date stringHeureFin;
-		Date stringDate;
-		try {
-			stringHeureDebut = (new SimpleDateFormat("yyyy-dd-MM HH:mm")).parse(date + " " + heureDebut);
-            stringHeureFin = (new SimpleDateFormat("yyyy-dd-MM HH:mm")).parse(date + " " + heureFin);
-			stringDate = (new SimpleDateFormat("yyyy-dd-MM")).parse(date);
-			Site site = siteRepository.findById(siteId);
-			TypeSession typeSession = typeSessionRepository.findById(typeSessionId);
-			Epreuve epreuve = epreuveRepository.findById(epreuveId);
-			
-			Session session = new Session(Integer.parseInt(id), code, stringDate, stringHeureDebut, stringHeureFin, description, site, typeSession, epreuve);
+        String regex = "^[A-Z]{3}\\d{2}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(code);
+		
+		if(matcher.matches()) {
+			Date stringHeureDebut;
+			Date stringHeureFin;
+			Date stringDate;
+			try {
+				stringHeureDebut = (new SimpleDateFormat("yyyy-dd-MM HH:mm")).parse(date + " " + heureDebut);
+	            stringHeureFin = (new SimpleDateFormat("yyyy-dd-MM HH:mm")).parse(date + " " + heureFin);
+				stringDate = (new SimpleDateFormat("yyyy-dd-MM")).parse(date);
+				Site site = siteRepository.findById(siteId);
+				TypeSession typeSession = typeSessionRepository.findById(typeSessionId);
+				Epreuve epreuve = epreuveRepository.findById(epreuveId);
+				
+				Session session = new Session(Integer.parseInt(id), code, stringDate, stringHeureDebut, stringHeureFin, description, site, typeSession, epreuve);
 
-			sessionRepository.update(session);
+				sessionRepository.update(session);
 
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
 		return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/sessions")).build();
 	}

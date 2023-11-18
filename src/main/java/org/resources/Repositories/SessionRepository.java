@@ -1,6 +1,7 @@
 package org.resources.Repositories;
 import java.sql.Connection;
 
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,12 +17,14 @@ import org.resources.Models.Session;
 import jakarta.ejb.Asynchronous;
 import jakarta.ejb.Stateless;
 
+
 @Stateless
 public class SessionRepository {
 	Connection connection = DBManager.getInstance().getConnection();
 
 	@Asynchronous
 	public void add(Session session) {
+		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
 	    String insertQuery = "insert into Session (code, date, heureDebut, heureFin, description, site_id, typeSession_id, epreuve_id) VALUES ('"+session.getCode()+"', '"+dateFormat.format(session.getDate())+"', '"+timeFormat.format(session.getHeureDebut())+"', '"+timeFormat.format(session.getHeureFin())+"', '"+session.getDescription()+"', "+session.getSite().getId()+", "+session.getTypeSession().getId()+", "+session.getEpreuve().getId()+")";
