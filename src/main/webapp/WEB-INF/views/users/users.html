@@ -25,7 +25,9 @@
 				<td>{{ user.email }}</td>
 				<td>{{ user.nom }}</td>
 				<td>{{ user.prenom }}</td>
+				{% if user.role.nom == 'Administrateur' %}
 				<td><a class="btn btn-warning" href="http://localhost:8080/JeuxOlympique/web/users/update?id={{ user.id }}">Modifier</a> <a class="btn btn-danger" href="http://localhost:8080/JeuxOlympique/web/users/delete?id={{ user.id }}">Supprimer</a></td>
+				{% endif %}
 			</tr>
 			{% endfor %}
 		</tbody>

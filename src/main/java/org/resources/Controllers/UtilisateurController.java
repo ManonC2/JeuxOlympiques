@@ -31,9 +31,20 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import at.favre.lib.crypto.bcrypt.BCrypt.Hasher;
 import jakarta.ejb.Asynchronous;
 import jakarta.ejb.Stateless;
-import jakarta.ws.rs.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
+
 
 @Stateless
 @Path("/users")
@@ -68,26 +79,6 @@ public class UtilisateurController {
 	@Asynchronous
 	@GET
 	@Produces(MediaType.TEXT_HTML)
-	@Path("/connexion")
-	public String connexion() throws IOException {
-		PebbleEngine engine = new PebbleEngine.Builder().build();
-		PebbleTemplate compiledTemplate = engine.getTemplate("WEB-INF/views/users/connexion.html");
-		
-		Map<String, Object> context = new HashMap<>();
-		
-		StringWriter writer = new StringWriter();
-
-		compiledTemplate.evaluate(writer, context);
-
-
-		String output = writer.toString();
-		
-		return output;
-	}
-	
-	@Asynchronous
-	@GET
-	@Produces(MediaType.TEXT_HTML)
 	@Path("/newUser")
 	public String newUser() throws IOException {
 		PebbleEngine engine = new PebbleEngine.Builder().build();
@@ -107,6 +98,38 @@ public class UtilisateurController {
 		
 		return output;
 	}
+
+	@Asynchronous
+	@POST
+	@Produces(MediaType.APPLICATION_FORM_URLENCODED)
+	@Path("/connexion")
+	public Response connexion(@FormParam("password") String password, @FormParam("email") String email, @Context HttpServletRequest request, @Context UriInfo uriInfo) {
+
+	    try {
+	        UtilisateurRepository utilisateurRepository2 = new UtilisateurRepository();
+	        Utilisateur user = utilisateurRepository2.findByEmailPassword(email, password);
+	        if (user != null) {
+	            HttpSession sessionUser = request.getSession(true);
+
+	            sessionUser.setAttribute("userId", user.getId());
+	            sessionUser.setAttribute("userEmail", user.getEmail());
+	            sessionUser.setAttribute("userNom", user.getNom());
+	            sessionUser.setAttribute("userPrenom", user.getPrenom());
+
+	            sessionUser.setAttribute("userRole", user.getRole().getId()); 
+	            
+	            return Response.seeOther(uriInfo.getBaseUri().resolve("/JeuxOlympique/web/accueil")).build();
+	        } else {
+	            System.out.println("Authentication Fail");
+	            return Response.seeOther(uriInfo.getBaseUri().resolve("/JeuxOlympique/web/connexion")).build();
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return Response.serverError().build();
+	    }
+	}
+
+
 	
 	@Asynchronous
 	@POST
