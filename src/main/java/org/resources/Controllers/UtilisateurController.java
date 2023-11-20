@@ -187,6 +187,36 @@ public class UtilisateurController {
 	}
 	
 	@Asynchronous
+	@GET
+	@Path("/formConnexion")
+	@Consumes(MediaType.TEXT_PLAIN)
+	public String update() {
+				
+		PebbleEngine engine = new PebbleEngine.Builder().build();
+		PebbleTemplate compiledTemplate = engine.getTemplate("WEB-INF/views/users/connexion.html");
+		
+		List<RoleUtilisateur> listeRolesUtilisateur = roleUtilisateurRepository.findAll();
+		
+		Map<String, Object> context = new HashMap<>();
+		context.put("roles", listeRolesUtilisateur);
+	
+		
+		StringWriter writer = new StringWriter();
+
+		try {
+			compiledTemplate.evaluate(writer, context);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		String output = writer.toString();
+		
+		return output;
+	}
+	
+	@Asynchronous
 	@POST
 	@Path("/addUpdatedUser")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
