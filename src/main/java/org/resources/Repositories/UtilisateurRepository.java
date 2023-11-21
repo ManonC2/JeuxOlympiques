@@ -118,8 +118,7 @@ public class UtilisateurRepository {
 		Statement statement;
 		try {
 			statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery("select * from Utilisateur where email = '" + mail + "', password = '" + password + "'");
-			
+			ResultSet rs = statement.executeQuery("select * from Utilisateur where email = '" + mail + "'");
 			while(rs.next()) {
 				int id = Integer.parseInt(rs.getString("id"));
 				String email = rs.getString("email");

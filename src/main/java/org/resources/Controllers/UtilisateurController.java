@@ -105,21 +105,23 @@ public class UtilisateurController {
 	@Produces(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("/connexion")
 	public Response connexion(@FormParam("password") String password, @FormParam("email") String email) {
-		try {
-	       UtilisateurRepository utilisateurRepository2 = new UtilisateurRepository();
-	         Utilisateur utilisateur = utilisateurRepository2.findByEmailPassword(email, password);
-	         if (utilisateur != null) {
-	             String sessionId = SessionConnexion.connecterUtilisateur(utilisateur);
-	             return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/accueil?sessionId=" + sessionId)).build();
-	         } else {
-	             System.out.println("Authentication Fail");
-	             return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/users/formConnexion")).build();
-	        }
-	     } catch (Exception e) {
-	         e.printStackTrace();
-	         return Response.serverError().build();
-	     }
-		}
+        try {
+            UtilisateurRepository utilisateurRepository2 = new UtilisateurRepository();
+            Utilisateur utilisateur = utilisateurRepository2.findByEmailPassword(email, password);
+
+            if (utilisateur != null && BCrypt.verifyer().verify(password.toCharArray(), utilisateur.getPassword()).verified) {
+                String sessionId = SessionConnexion.connecterUtilisateur(utilisateur);
+                return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/accueil?sessionId=" + sessionId)).build();
+            } else {
+                System.out.println("Authentication Fail");
+                return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/users/formConnexion")).build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.serverError().build();
+        }
+    }
+
 	
 	@Asynchronous
 	@POST
