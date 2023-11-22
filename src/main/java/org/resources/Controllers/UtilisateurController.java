@@ -182,7 +182,7 @@ public class UtilisateurController {
 	@GET
 	@Path("/formConnexion")
 	@Consumes(MediaType.TEXT_PLAIN)
-	public String update() {
+	public String formConnexion() {
 				
 		PebbleEngine engine = new PebbleEngine.Builder().build();
 		PebbleTemplate compiledTemplate = engine.getTemplate("WEB-INF/views/users/connexion.html");

@@ -23,8 +23,6 @@ public class Discipline {
 		this.paralympique = paralympique;
 	}
 
-
-
 	public int getId() {
 		return id;
 	}

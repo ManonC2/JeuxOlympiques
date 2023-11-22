@@ -88,7 +88,7 @@ public class SiteController {
 
 		CategorieSite categorieSite = categorieSiteRepository.findById(categorieSiteId);
 
-		Site site = new Site(nom, ville, categorieSite);
+		Site site = new Site(categorieSiteId,nom, ville, categorieSite);
 
 		siteRepository.add(site);
 

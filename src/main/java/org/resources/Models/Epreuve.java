@@ -3,22 +3,10 @@ package org.resources.Models;
 public class Epreuve {
 	
 	private int id;
-	
 	private String nom;
-	
 	private Discipline discipline;
-	
 	private CategorieEpreuve categorieEpreuve;
-	
 	boolean collectif;
-
-	public Epreuve(String nom, Discipline discipline, CategorieEpreuve categorieEpreuve, boolean collectif) {
-		super();
-		this.nom = nom;
-		this.discipline = discipline;
-		this.categorieEpreuve = categorieEpreuve;
-		this.collectif = collectif;
-	}
 
 	public Epreuve(int id, String nom, Discipline discipline, CategorieEpreuve categorieEpreuve, boolean collectif) {
 		super();

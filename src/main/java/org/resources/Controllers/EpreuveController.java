@@ -152,7 +152,7 @@ public class EpreuveController {
 
 		CategorieEpreuve catEpreuve = categorieEpreuveRepository.findById(categorieEpreuveId);
 		Discipline discipline = disciplineRepository.findById(disciplineId);
-		Epreuve epreuve = new Epreuve(nom, discipline, catEpreuve, collectif);
+		Epreuve epreuve = new Epreuve(categorieEpreuveId,nom, discipline, catEpreuve, collectif);
 
 		epreuveRepository.add(epreuve);
 
