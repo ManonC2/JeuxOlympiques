@@ -2,7 +2,7 @@
 <html>
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="https://bootswatch.com/4/yeti/bootstrap.min.css">
+<link rel="stylesheet" href="https://bootswatch.com/4/yeti/bootstrap.min.css">
 {% endblock %}
 
 <body>
@@ -18,20 +18,29 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="http://localhost:8080/JeuxOlympique/web/sessions">Sessions</a>
-                </li>
-                <li class="nav-item">
+      	        </li>
+      	        <li class="nav-item">
                     <a class="nav-link" href="http://localhost:8080/JeuxOlympique/web/users">Utilisateurs</a>
                 </li>
-                {% if session.userNom is defined %}
-                    <span class="navbar-text">
-                        Connecté en tant que {{ session.userNom }}
-                    </span>
-                    <a href="URL_DE_DECONNEXION" class="btn btn-danger">Se déconnecter</a>
-                {% else %}
-                    <a href="http://localhost:8080/JeuxOlympique/web/users/formConnexion" class="btn btn-success">Se connecter</a>
-                {% endif %}
+  				<li class="nav-item">
+                {% if sessionIdCookie != null %}
+                        <!-- Utilisez la méthode getNomUtilisateur pour obtenir le nom de l'utilisateur -->
+                        <span class="navbar-text">
+                            Bienvenue, {{ sessionConnexion.getNomUtilisateur(sessionIdCookie.getValue()) }}
+                        </span>
+                    {% endif %}
+                </li>
+                <li class="nav-item">
+                    {% if sessionIdCookie != null %}
+                        <!-- Utilisateur connecté : afficher le bouton de déconnexion -->
+                        <a href="http://localhost:8080/JeuxOlympique/web/users/deconnexion" class="btn btn-danger">Se déconnecter</a>
+                    {% else %}
+                        <!-- Utilisateur non connecté : afficher le bouton de connexion -->
+                        <a href="http://localhost:8080/JeuxOlympique/web/users/formConnexion" class="btn btn-success">Se connecter</a>
+                    {% endif %}
+                </li>
             </ul>
-        </div>
+        </div>	
     </nav>
     <div id="content">
         {% block content %}{% endblock %}

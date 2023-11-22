@@ -35,6 +35,7 @@ import jakarta.ejb.Stateless;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.CookieParam;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -43,6 +44,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
@@ -105,22 +107,26 @@ public class UtilisateurController {
 	@Produces(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("/connexion")
 	public Response connexion(@FormParam("password") String password, @FormParam("email") String email) {
-        try {
-            UtilisateurRepository utilisateurRepository2 = new UtilisateurRepository();
-            Utilisateur utilisateur = utilisateurRepository2.findByEmailPassword(email, password);
+	    try {
+	        UtilisateurRepository utilisateurRepository2 = new UtilisateurRepository();
+	        Utilisateur utilisateur = utilisateurRepository2.findByEmailPassword(email, password);
 
-            if (utilisateur != null && BCrypt.verifyer().verify(password.toCharArray(), utilisateur.getPassword()).verified) {
-                String sessionId = SessionConnexion.connecterUtilisateur(utilisateur);
-                return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/accueil?sessionId=" + sessionId)).build();
-            } else {
-                System.out.println("Authentication Fail");
-                return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/users/formConnexion")).build();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.serverError().build();
-        }
-    }
+	        if (utilisateur != null && BCrypt.verifyer().verify(password.toCharArray(), utilisateur.getPassword()).verified) {
+	            String sessionId = SessionConnexion.connecterUtilisateur(utilisateur);
+
+				NewCookie cookie = new NewCookie("sessionId", sessionId);
+
+	            return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/accueil")).cookie(cookie).build();
+	        } else {
+	            System.out.println("Authentication Fail");
+	            return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/users/formConnexion")).build();
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return Response.serverError().build();
+	    }
+	}
+
 
 	
 	@Asynchronous
@@ -224,14 +230,23 @@ public class UtilisateurController {
 		return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/users")).build();
 
 	}
-	
+
 	@Asynchronous
-    @GET
-    @Path("/deconnexion")
-    public Response deconnexion(@QueryParam("sessionId") String sessionId) {
-        SessionConnexion.deconnecterUtilisateur(sessionId);
-        return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/accueil")).build();
-    }
+	@GET
+	@Path("/deconnexion")
+	public Response deconnexion(@CookieParam("sessionId") String sessionId) {
+	    if (sessionId != null) {
+	        SessionConnexion.deconnecterUtilisateur(sessionId);
+
+	        NewCookie expiredCookie = new NewCookie("sessionId", null);
+
+	        return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/accueil")).cookie(expiredCookie).build();
+	    } else {
+	        return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/accueil")).build();
+	    }
+	}
+
+
 	
 	@Asynchronous
 	@GET
