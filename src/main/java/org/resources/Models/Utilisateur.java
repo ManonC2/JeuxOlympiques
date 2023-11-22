@@ -23,13 +23,14 @@ public class Utilisateur implements Serializable {
 		this.role = role;
 	}
 
-	public Utilisateur(int id, String email, String nom, String prenom, RoleUtilisateur role) {
+	public Utilisateur(int id, String email, String nom, String prenom, RoleUtilisateur role, String password) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.role = role;
+		this.password = password;
 	}
 		
 	public Utilisateur(String password, String email, String nom, String prenom, RoleUtilisateur role) {

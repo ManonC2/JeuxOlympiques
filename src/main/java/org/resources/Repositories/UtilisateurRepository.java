@@ -78,8 +78,9 @@ public class UtilisateurRepository {
 				String nom = rs.getString("nom");
 				String prenom = rs.getString("prenom");
 				int roleUtilisateurId = Integer.parseInt(rs.getString("role_id"));
+				String pass = rs.getString("password");
 				RoleUtilisateurRepository roleUtilisateurRepo = new RoleUtilisateurRepository();
-				liste.add(new Utilisateur(id, email, nom, prenom, roleUtilisateurRepo.findById(roleUtilisateurId)));
+				liste.add(new Utilisateur(id, email, nom, prenom, roleUtilisateurRepo.findById(roleUtilisateurId), pass));
 				}
 			
 		} catch (SQLException e) {
@@ -102,8 +103,9 @@ public class UtilisateurRepository {
 				String nom = rs.getString("nom");
 				String prenom = rs.getString("prenom");
 				int roleUtilisateurId = Integer.parseInt(rs.getString("role_id"));
+				String pass = rs.getString("password");
 				RoleUtilisateurRepository roleUtilisateurRepo = new RoleUtilisateurRepository();
-				return new Utilisateur(id, email, nom, prenom, roleUtilisateurRepo.findById(roleUtilisateurId));
+				return new Utilisateur(id, email, nom, prenom, roleUtilisateurRepo.findById(roleUtilisateurId), pass);
 			}
 		}
 		catch(SQLException e) {
@@ -125,8 +127,9 @@ public class UtilisateurRepository {
 				String nom = rs.getString("nom");
 				String prenom = rs.getString("prenom");
 				int roleUtilisateurId = Integer.parseInt(rs.getString("role_id"));
+				String pass = rs.getString("password");
 				RoleUtilisateurRepository roleUtilisateurRepo = new RoleUtilisateurRepository();
-				return new Utilisateur(id, email, nom, prenom, roleUtilisateurRepo.findById(roleUtilisateurId));
+				return new Utilisateur(id, email, nom, prenom, roleUtilisateurRepo.findById(roleUtilisateurId), pass);
 			}
 		}
 		catch(SQLException e) {

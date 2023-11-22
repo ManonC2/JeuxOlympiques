@@ -217,7 +217,7 @@ public class UtilisateurController {
 
 		RoleUtilisateur roleUser = roleUtilisateurRepository.findById(roleId);
 	    
-		Utilisateur user= new Utilisateur(Integer.parseInt(id), email, nom, prenom, roleUser);
+		Utilisateur user= new Utilisateur(Integer.parseInt(id), email, nom, prenom, roleUser, null);
 
 		utilisateurRepository.update(user);
 
