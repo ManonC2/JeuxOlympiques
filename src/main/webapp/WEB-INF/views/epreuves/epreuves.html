@@ -17,7 +17,7 @@
 				<th scope="col">Discipline</th>
 				<th scope="col">Nom</th>
 				<th scope="col">Catégorie</th>
-				{% if Connecter == true and ((RoleCookie==2 or 3) or 4) %}
+{% if Connecter == true and ((RoleCookie==2 or RoleCookie==3) or RoleCookie==4) %}
 					<th scope="col">Actions</th>
 				{% endif %}
 			</tr>
@@ -29,7 +29,7 @@
 			      <td>{{ epreuve.discipline.nom }}</td>
 			      <td>{{ epreuve.nom }}</td>
 			      <td>{{ epreuve.categorieEpreuve.nom }}</td>
-			     {% if Connecter == true and ((RoleCookie==2 or 3) or 4) %}
+{% if Connecter == true and ((RoleCookie==2 or RoleCookie==3) or RoleCookie==4) %}
 			     	<td><a class="btn btn-warning" href="http://localhost:8080/JeuxOlympique/web/epreuves/updateEpreuve?id={{ epreuve.id }}">Modifier</a> <a class="btn btn-danger" href="http://localhost:8080/JeuxOlympique/web/epreuves/delete?id={{ epreuve.id }}">Supprimer</a></td>
 				 {% endif %}
 
