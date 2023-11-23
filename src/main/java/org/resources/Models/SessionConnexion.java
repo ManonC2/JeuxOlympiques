@@ -14,7 +14,8 @@ public class SessionConnexion {
     }
 
     public static Utilisateur getUtilisateur(String sessionId) {
-        return sessions.get(sessionId);
+    	Utilisateur utilisateur = sessions.get(sessionId);
+        return utilisateur;
     }
 
     public static void deconnecterUtilisateur(String sessionId) {

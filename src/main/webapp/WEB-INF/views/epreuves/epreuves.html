@@ -3,10 +3,12 @@
 {% block title %} Epreuves {% endblock %}
 
 {% block content %}
+{% if Connecter == true and ((RoleCookie==2 or RoleCookie==3) or RoleCookie==4) %}
 	<div class="d-flex justify-content-center">
 		<a href="http://localhost:8080/JeuxOlympique/web/epreuves/newEpreuve"><button class="btn btn-primary mb-3">Ajouter une epreuve</button></a>
 		<a href="http://localhost:8080/JeuxOlympique/web/epreuves/newDiscipline"><button class="btn btn-primary mb-3">Ajouter une discipline</button></a>
 	</div>
+{% endif %}
 	<div class="d-flex justify-content-center">
 	<table class="table w-75">
 		<thead>
@@ -15,7 +17,9 @@
 				<th scope="col">Discipline</th>
 				<th scope="col">Nom</th>
 				<th scope="col">Catégorie</th>
-				<th scope="col">Actions</th>
+				{% if Connecter == true and ((RoleCookie==2 or 3) or 4) %}
+					<th scope="col">Actions</th>
+				{% endif %}
 			</tr>
 		</thead>
 		<tbody>
@@ -25,7 +29,10 @@
 			      <td>{{ epreuve.discipline.nom }}</td>
 			      <td>{{ epreuve.nom }}</td>
 			      <td>{{ epreuve.categorieEpreuve.nom }}</td>
-			     <td><a class="btn btn-warning" href="http://localhost:8080/JeuxOlympique/web/epreuves/updateEpreuve?id={{ epreuve.id }}">Modifier</a> <a class="btn btn-danger" href="http://localhost:8080/JeuxOlympique/web/epreuves/delete?id={{ epreuve.id }}">Supprimer</a></td>
+			     {% if Connecter == true and ((RoleCookie==2 or 3) or 4) %}
+			     	<td><a class="btn btn-warning" href="http://localhost:8080/JeuxOlympique/web/epreuves/updateEpreuve?id={{ epreuve.id }}">Modifier</a> <a class="btn btn-danger" href="http://localhost:8080/JeuxOlympique/web/epreuves/delete?id={{ epreuve.id }}">Supprimer</a></td>
+				 {% endif %}
+
 			{% endfor %}
 		</tbody>
 	</table>

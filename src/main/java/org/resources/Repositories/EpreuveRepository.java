@@ -133,7 +133,7 @@ public class EpreuveRepository {
 		try {
 			statement = connection.createStatement();
 			
-			ResultSet rs = statement.executeQuery("SELECT nom FROM Epreuve WHERE nom LIKE '%kg%';");
+			ResultSet rs = statement.executeQuery("SELECT id FROM Epreuve WHERE nom LIKE '%kg%';");
 			
 			while(rs.next()) {
 				int id = Integer.parseInt(rs.getString("id"));				

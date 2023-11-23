@@ -4,8 +4,10 @@
 
 {% block content %}
 <div class="d-flex justify-content-center">
+	{% if Connecter == true and RoleCookie==4 %}
 	<a href="http://localhost:8080/JeuxOlympique/web/users/newUser"><button class="btn btn-primary mb-3">Ajouter un
 			utilisateur</button></a>
+	{% endif %}
 </div>
 <div class="d-flex justify-content-center">
 	<table class="table w-75">
@@ -15,7 +17,9 @@
 				<th scope="col">Email</th>
 				<th scope="col">Nom</th>
 				<th scope="col">Prenom</th>
-				<th scope="col">Actions</th>
+				{% if Connecter == true and RoleCookie==4 %}
+					<th scope="col">Actions</th>
+				{% endif %}
 			</tr>
 		</thead>
 		<tbody>
@@ -25,7 +29,7 @@
 				<td>{{ user.email }}</td>
 				<td>{{ user.nom }}</td>
 				<td>{{ user.prenom }}</td>
-				{% if user.role.nom == 'Administrateur' %}
+				{% if Connecter == true and RoleCookie==4 %}
 				<td><a class="btn btn-warning" href="http://localhost:8080/JeuxOlympique/web/users/update?id={{ user.id }}">Modifier</a> <a class="btn btn-danger" href="http://localhost:8080/JeuxOlympique/web/users/delete?id={{ user.id }}">Supprimer</a></td>
 				{% endif %}
 			</tr>

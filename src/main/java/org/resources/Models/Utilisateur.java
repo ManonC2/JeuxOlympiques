@@ -78,5 +78,4 @@ public class Utilisateur implements Serializable {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-	
 }

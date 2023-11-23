@@ -12,6 +12,7 @@ import org.resources.Models.CategorieEpreuve;
 import org.resources.Models.Discipline;
 import org.resources.Models.Epreuve;
 import org.resources.Models.Session;
+import org.resources.Models.SessionConnexion;
 import org.resources.Models.Site;
 import org.resources.Models.TypeSession;
 import org.resources.Repositories.CategorieEpreuveRepository;
@@ -38,7 +39,7 @@ public class EpreuveController {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	@Path("/")
-	public String hello() throws IOException {
+	public String hello(@CookieParam("sessionId") String sessionId) throws IOException {
 		PebbleEngine engine = new PebbleEngine.Builder().build();
 		PebbleTemplate compiledTemplate = engine.getTemplate("WEB-INF/views/epreuves/epreuves.html");
 		
@@ -48,6 +49,13 @@ public class EpreuveController {
 		context.put("epreuves", listEpreuves);
 		StringWriter writer = new StringWriter();
 
+		if(SessionConnexion.getUtilisateur(sessionId) != null){
+			context.put("RoleCookie",SessionConnexion.getUtilisateur(sessionId).getRole().getId());
+			context.put("Connecter", true);
+		}
+		else {
+			context.put("Connecter", false);
+		}
 		compiledTemplate.evaluate(writer, context);
 
 
