@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import org.resources.Models.CategorieEpreuve;
 import org.resources.Models.CategorieSite;
 import org.resources.Models.Discipline;
@@ -127,7 +130,8 @@ public class UtilisateurController {
 
 	            return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/accueil")).cookie(cookie).build();
 	        } else {
-	            System.out.println("Authentication Fail");
+	        	JFrame jFrame = new JFrame();
+	        	JOptionPane.showMessageDialog(jFrame, "Erreur d'authentification. Veuillez ré-essayer");
 	            return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/users/formConnexion")).build();
 	        }
 	    } catch (Exception e) {
