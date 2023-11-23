@@ -2,19 +2,9 @@ package org.resources.Models;
 
 public class Site {
 	private int id;
-	
 	private String nom;
-
 	private String ville;
-	
 	private CategorieSite categorieSite;
-	
-	public Site(String nom, String ville, CategorieSite categorieSite) {
-		super();
-		this.nom = nom;
-		this.ville = ville;
-		this.categorieSite = categorieSite;
-	}
 
 	public Site(int id, String nom, String ville, CategorieSite categorieSite) {
 		super();

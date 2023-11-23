@@ -3,6 +3,7 @@
 {% block title %} Sessions {% endblock %}
 
 {% block content %}
+{% if Connecter == true and ((RoleCookie==1 or RoleCookie==3) or RoleCookie==4) %}
 	<div class="d-flex justify-content-center">
 		<a href="http://localhost:8080/JeuxOlympique/web/sessions/newSession"><button class="btn btn-primary mb-3">Ajouter une session</button></a>
 	</div>
@@ -19,6 +20,9 @@
 				<th scope="col">Site</th>
 				<th scope="col">Type de session</th>
 				<th scope="col">Epreuve</th>
+				{% if Connecter == true and ((RoleCookie==1 or RoleCookie==3) or RoleCookie==4) %}
+				<th scope="col">Actions</th>
+				{% endif %}
 			</tr>
 		</thead>
 		<tbody>
@@ -26,13 +30,16 @@
 				 <tr>
 			      <td>{{ session.id }}</td>
 			      <td>{{ session.code }}</td>
-			      <td>{{ session.date | date("dd/MM/yyyy")  }}</td>
+			      <td>{{ session.date | date("dd/MM/yyyy") }}</td>
 			      <td>{{ session.heureDebut | date("HH:mm") }}</td>
 			      <td>{{ session.heureFin | date("HH:mm")}}</td>
 			      <td>{{ session.description }}</td>
 			      <td>{{ session.site.nom }}</td>
 			      <td>{{ session.typeSession.nom }}</td>
 			      <td>{{ session.epreuve.nom }}</td>
+			      {% if Connecter == true and ((RoleCookie==1 or RoleCookie==3) or RoleCookie==4) %}
+			      <td><a class="btn btn-warning" href="http://localhost:8080/JeuxOlympique/web/sessions/updateSession?id={{ session.id }}">Modifier</a> <a class="btn btn-danger" href="http://localhost:8080/JeuxOlympique/web/sessions/delete?id={{ session.id }}">Supprimer</a></td>
+			   	  {% endif %}
 			    </tr>
 			{% endfor %}
 		</tbody>

@@ -1,37 +1,51 @@
 <meta charset="utf-8">
 <html>
 
-	{% block stylesheets %}
-			<link rel="stylesheet" href="https://bootswatch.com/4/yeti/bootstrap.min.css">
-	{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="https://bootswatch.com/4/yeti/bootstrap.min.css">
+{% endblock %}
+
 <body>
-	<nav class="navbar navbar-expand-md bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="http://localhost:8080/JeuxOlympique/web/accueil">Système de gestion</a>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="http://localhost:8080/JeuxOlympique/web/sites">Sites</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="http://localhost:8080/JeuxOlympique/web/epreuves">Epreuves</a>
-        </li>
-		<li class="nav-item">
-          <a class="nav-link" href="http://localhost:8080/JeuxOlympique/web/sessions">Sessions</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="http://localhost:8080/JeuxOlympique/web/users">Utilisateurs</a>
-        </li>
-        <a href="http://localhost:8080/JeuxOlympique/web/users/connexion" class="btn btn-success">Se connecter</a>
-        <li class="nav-item">
-          <button class="btn btn-danger" href="#">Se déconnecter</button>
-        </li>
-  </div>
-</nav>
-	<div id="content">
-		{% block content %}{% endblock %}
-	</div>
-	<div id="footer">
-		{% block footer %}{% endblock %}
-	</div>
+    <nav class="navbar navbar-expand-md bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="http://localhost:8080/JeuxOlympique/web/accueil">Système de gestion</a>
+            <ul class="navbar-nav">
+				{% if Connecter == true and ((RoleCookie==2 or RoleCookie==3) or RoleCookie==4) %}
+	                <li class="nav-item">
+	                    <a class="nav-link active" aria-current="page" href="http://localhost:8080/JeuxOlympique/web/sites">Sites</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" href="http://localhost:8080/JeuxOlympique/web/epreuves">Epreuves</a>
+	                </li>
+                {% endif %}
+                {% if Connecter == true and ((RoleCookie==1 or RoleCookie==3) or RoleCookie==4) %}
+	                <li class="nav-item">
+	                    <a class="nav-link" href="http://localhost:8080/JeuxOlympique/web/sessions">Sessions</a>
+	      	        </li>
+	      	    {% endif %}
+      	        {% if Connecter == true and RoleCookie==4 %}
+	      	        <li class="nav-item">
+	                    <a class="nav-link" href="http://localhost:8080/JeuxOlympique/web/users">Utilisateurs</a>
+	                </li>
+                {% endif %}
+                <li class="nav-item">
+                    {% if Connecter == true %}
+                        <!-- Utilisateur connecté : afficher le bouton de déconnexion -->
+                        <a href="http://localhost:8080/JeuxOlympique/web/users/deconnexion" class="btn btn-danger">Se déconnecter</a>
+                    {% else %}
+                        <!-- Utilisateur non connecté : afficher le bouton de connexion -->
+                        <a href="http://localhost:8080/JeuxOlympique/web/users/formConnexion" class="btn btn-success">Se connecter</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>	
+    </nav>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+    <div id="footer">
+        {% block footer %}{% endblock %}
+    </div>
 </body>
+
 </html>

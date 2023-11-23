@@ -1,6 +1,6 @@
 {% extends "WEB-INF/views/base.html" %}
 
-{% block title %} Sites {% endblock %}
+{% block title %} users {% endblock %}
 
 {% block content %}
 <body>
@@ -9,17 +9,24 @@
 	
 	<div class="d-flex justify-content-center">
 		
-		<form action="" method="get" class="m-5">
+		{% if user is not empty%} <form action="http://localhost:8080/JeuxOlympique/web/users/addUpdatedUser?id={{user.id}}" method="post" class="m-5">{% endif %}
+		{% if user is empty%}<form action="http://localhost:8080/JeuxOlympique/web/users/addUser" method="post" class="m-5"> {% endif %}
+
 	  	<div class="form-group text-center">
 	  	
 	  	<label for="email">Entrez le courriel de l'utilisateur : </label>
-	    <input type="text" name="email" id="email" class="form-control" required />
+	    <input type="text" name="email" id="email" class="form-control" {% if user is not empty %} value="{{user.email}}" {% endif %} required />
 	    
 	    <label for="nom">Entrez le nom de l'utilisateur : </label>
-	    <input type="text" name="nom" id="nom" class="form-control" required />
-	    
+	    <input type="text" name="nom" id="nom" class="form-control" {% if user is not empty %} value="{{user.nom}}" {% endif %} required />
+	    	
 	    <label for="prenom">Entrez le prénom de l'utilisateur : </label>
-	    <input type="text" name="prenom" id="prenom" class="form-control" required />
+	    <input type="text" name="prenom" id="prenom" class="form-control" {% if user is not empty%} value="{{user.prenom}}" {% endif %} required />
+	    
+	    {% if user is empty %}
+	    <label for="password">Entrez le mot de passe de l'utilisateur : </label>
+	    <input type="password" id="password" name="password" class="form-control" required />
+	    {% endif %}
 	  
 	    <label for="role">Entrez le rôle de l'utilisateur : </label>
 	    <select id="role" name="role" class="form-control" required>

@@ -10,9 +10,14 @@ import java.util.List;
 import org.assets.DBManager;
 import org.resources.Models.Site;
 
+import jakarta.ejb.Asynchronous;
+import jakarta.ejb.Stateless;
+
+@Stateless
 public class SiteRepository {
 Connection connection = DBManager.getInstance().getConnection();
 	
+	@Asynchronous
 	public void add(Site site) {
 	    String insertQuery = "insert into Site (nom, ville, categorie_id) VALUES ( '" + site.getNom() + "', '" + site.getVille() + "', " + site.getCategorieSite().getId() + ")";
 	    try {
@@ -23,8 +28,9 @@ Connection connection = DBManager.getInstance().getConnection();
 	    }
 	}
 	
+	@Asynchronous
 	public void update(Site site) {
-	    String insertQuery = "update Site set nom = '" + site.getNom() + "', ville = '" + site.getVille() + "' where id = " + site.getId();
+	    String insertQuery = "update Site set nom = '" + site.getNom() + "', ville = '" + site.getVille() + "', categorie_id = " + site.getCategorieSite() + " where id = " + site.getId();
 	    try {
 	    	connection.createStatement().execute(insertQuery);
 	    }
@@ -33,6 +39,7 @@ Connection connection = DBManager.getInstance().getConnection();
 	    }
 	}
 	
+	@Asynchronous
 	public void delete(int id) {
 		String insertQuery = "delete from Site where id = " + id;
 		try {
@@ -45,6 +52,7 @@ Connection connection = DBManager.getInstance().getConnection();
 	    }
 	}
 
+	@Asynchronous
 	public void deleteFromCategorieSite(int categorieSite_id) {
 		String insertQuery = "delete from Site where categorie_id = " + categorieSite_id;
 		Statement statement;
@@ -65,6 +73,7 @@ Connection connection = DBManager.getInstance().getConnection();
 	    }
 	}
 
+	@Asynchronous
 	public List<Site> findAll() {
 		
 		List<Site> liste = new ArrayList<Site>();
@@ -94,6 +103,7 @@ Connection connection = DBManager.getInstance().getConnection();
 		
 	}
 	
+	@Asynchronous
 	public Site findById(int id) {
 		Statement statement;
 		try {
@@ -115,5 +125,30 @@ Connection connection = DBManager.getInstance().getConnection();
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	
+	@Asynchronous
+	public List<Site> findSitesWithLotOfSessions() {
+		
+		List<Site> liste = new ArrayList<Site>();
+		
+		Statement statement;
+		try {
+			statement = connection.createStatement();
+			
+			ResultSet rs = statement.executeQuery("SELECT s.id, COUNT(*) AS nombre_sessions FROM Site s JOIN Session se ON s.id = se.site_id GROUP BY s.id, s.nom, s.ville ORDER BY nombre_sessions DESC LIMIT 5;");
+			
+			while(rs.next()) {
+				int id = Integer.parseInt(rs.getString("id"));
+				liste.add(findById(id));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return liste;
+		
 	}
 }

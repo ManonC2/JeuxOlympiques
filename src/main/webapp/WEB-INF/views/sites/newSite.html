@@ -8,20 +8,21 @@
 		
 	
 	<div class="d-flex justify-content-center">
+		{% if site is not empty%} <form action="http://localhost:8080/JeuxOlympique/web/sites/addUpdatedSite?id={{site.id}}" method="post" class="m-5">{% endif %}
+		{% if site is empty%}<form action="http://localhost:8080/JeuxOlympique/web/sites/addSite" method="post" class="m-5"> {% endif %}
 		
-		<form action="http://localhost:8080/JeuxOlympique/web/sites/addSite" method="post" class="m-5">
 	  	<div class="form-group text-center">
 			  
 	    <label for="nom">Entrez le nom du site : </label>
-	    <input type="text" name="nom" id="nom" class="form-control" required />
+	    <input type="text" name="nom" id="nom" class="form-control" {% if site is not empty%} value="{{site.nom}}" {% endif %}required />
 	  
 	    <label for="ville">Entrez la ville du site : </label>
-	    <input type="text" name="ville" id="ville" class="form-control" required />
+	    <input type="text" name="ville" id="ville" class="form-control" {% if site is not empty%} value="{{site.ville}}" {% endif %}required />
 	  
 	    <label for="categorieSite">Entrez le type du site : </label>
 	    <select id="categorieSite" name="categorieSite" class="form-control" required>
 			{% for categorieSite in categoriesSites %}
-				<option value="{{ categorieSite.id }}" >{{ categorieSite.nom }}</option>
+			<option value="{{ categorieSite.id }}" >{{ categorieSite.nom }}</option>
 			{% endfor %}
 		</select>
 		

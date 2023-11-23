@@ -10,10 +10,14 @@ import java.util.List;
 import org.assets.DBManager;
 import org.resources.Models.RoleUtilisateur;
 
+import jakarta.ejb.Asynchronous;
+import jakarta.ejb.Stateless;
+
+@Stateless
 public class RoleUtilisateurRepository {
 	Connection connection = DBManager.getInstance().getConnection();
 	
-	
+	@Asynchronous
 	public void add(RoleUtilisateur roleUtilisateur) {
 	    String insertQuery = "insert into RoleUtilisateur (nom) VALUES ( '" + roleUtilisateur.getNom() + "')";
 	    try {
@@ -23,6 +27,8 @@ public class RoleUtilisateurRepository {
 	        e.printStackTrace();
 	    }
 	}
+	
+	@Asynchronous
 	public void update(RoleUtilisateur roleUtilisateur) {
 	    String insertQuery = "update RoleUtilisateur set nom = '" + roleUtilisateur.getNom() + "' where id = " + roleUtilisateur.getId();
 	    try {
@@ -45,6 +51,7 @@ public class RoleUtilisateurRepository {
 	    }
 	}
 
+	@Asynchronous
 	public List<RoleUtilisateur> findAll() {
 		
 		List<RoleUtilisateur> liste = new ArrayList<RoleUtilisateur>();
@@ -71,6 +78,7 @@ public class RoleUtilisateurRepository {
 		
 	}
 	
+	@Asynchronous
 	public RoleUtilisateur findById(int id) {
 		Statement statement;
 		try {

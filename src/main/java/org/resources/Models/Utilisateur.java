@@ -1,37 +1,33 @@
 package org.resources.Models;
 
-public class Utilisateur {
-	private int id;
-	
-	private String password;
-	
-	private String email;
-	
-	private String nom;
-	
-	private String prenom;
-	
-	private RoleUtilisateur role;
-	
-	public Utilisateur(String password, RoleUtilisateur role) {
-		super();
-		this.password = password;
-		this.role = role;
-	}
+import java.io.Serializable;
 
-	public Utilisateur(int id, String email, String nom, String prenom, RoleUtilisateur role) {
+public class Utilisateur implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	private int id;
+	private String password;
+	private String email;
+	private String nom;
+	private String prenom;
+	private RoleUtilisateur role;
+
+	public Utilisateur(int id, String email, String nom, String prenom, RoleUtilisateur role, String password) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.role = role;
-	}
-
-	public Utilisateur(int id, String password, RoleUtilisateur role) {
-		super();
-		this.id = id;
 		this.password = password;
+	}
+		
+	public Utilisateur(String password, String email, String nom, String prenom, RoleUtilisateur role) {
+		super();
+		this.password = password;
+		this.email = email;
+		this.nom = nom;
+		this.prenom = prenom;
 		this.role = role;
 	}
 
@@ -82,5 +78,4 @@ public class Utilisateur {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-	
 }

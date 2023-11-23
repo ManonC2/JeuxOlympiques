@@ -10,10 +10,14 @@ import java.util.List;
 import org.assets.DBManager;
 import org.resources.Models.TypeSession;
 
+import jakarta.ejb.Asynchronous;
+import jakarta.ejb.Stateless;
+
+@Stateless
 public class TypeSessionRepository {
 	Connection connection = DBManager.getInstance().getConnection();
 	
-	
+	@Asynchronous
 	public void add(TypeSession typeSession) {
 	    String insertQuery = "insert into TypeSession (nom) VALUES ( '" + typeSession.getNom() + "')";
 	    try {
@@ -24,6 +28,7 @@ public class TypeSessionRepository {
 	    }
 	}
 
+	@Asynchronous
 	public void update(TypeSession typeSession) {
 	    String insertQuery = "update TypeSession set nom = '" + typeSession.getNom() + "' where id = " + typeSession.getId();
 	    try {
@@ -34,6 +39,7 @@ public class TypeSessionRepository {
 	    }
 	}
 
+	@Asynchronous
 	public void delete(int id) {
 		String insertQuery = "delete from TypeSession where id = " + id;
 		try {
@@ -45,6 +51,8 @@ public class TypeSessionRepository {
 	        e.printStackTrace();
 	    }
 	}
+	
+	@Asynchronous
 	public List<TypeSession> findAll() {
 		
 		List<TypeSession> liste = new ArrayList<TypeSession>();
@@ -71,6 +79,7 @@ public class TypeSessionRepository {
 		
 	}
 	
+	@Asynchronous
 	public TypeSession findById(int id) {
 		Statement statement;
 		try {

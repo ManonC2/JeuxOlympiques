@@ -1,11 +1,13 @@
 package org.resources.Repositories;
 import java.sql.Connection;
 
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,13 +15,36 @@ import java.util.List;
 import org.assets.DBManager;
 import org.resources.Models.Session;
 
+import jakarta.ejb.Asynchronous;
+import jakarta.ejb.Stateless;
+
+
+@Stateless
 public class SessionRepository {
 	Connection connection = DBManager.getInstance().getConnection();
 
+	@Asynchronous
 	public void add(Session session) {
+		
+		
+		List<Session> sessions = findByDiscipline(session.getEpreuve().getDiscipline().getId());
+		
+		for(int i = 0; i < sessions.size(); i++) {
+			Session s = sessions.get(i);
+			if(session.getHeureDebut().compareTo(s.getHeureDebut()) >= 0 && session.getHeureFin().compareTo(s.getHeureFin()) <= 0) {
+				return;
+			}
+	        long differenceInMillis = s.getHeureFin().getTime() - session.getHeureDebut().getTime();
+	        if (differenceInMillis < 2 * 60 * 60 * 1000) {
+	            return;
+	        }
+		}
+		
+		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
 	    String insertQuery = "insert into Session (code, date, heureDebut, heureFin, description, site_id, typeSession_id, epreuve_id) VALUES ('"+session.getCode()+"', '"+dateFormat.format(session.getDate())+"', '"+timeFormat.format(session.getHeureDebut())+"', '"+timeFormat.format(session.getHeureFin())+"', '"+session.getDescription()+"', "+session.getSite().getId()+", "+session.getTypeSession().getId()+", "+session.getEpreuve().getId()+")";
+	    
 	    try {
 	    	connection.createStatement().execute(insertQuery);
 	    }
@@ -28,6 +53,7 @@ public class SessionRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void update(Session session) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
@@ -40,6 +66,7 @@ public class SessionRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void delete(int id) {
 		String insertQuery = "delete from Session where id = " + id;
 		try {
@@ -50,6 +77,7 @@ public class SessionRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void deleteFromTypeSession(int typeSession_id) {
 		String insertQuery = "delete from Session where typeSession_id = " + typeSession_id;
 		try {
@@ -60,6 +88,7 @@ public class SessionRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void deleteFromEpreuve(int epreuve_id) {
 		String insertQuery = "delete from Session where epreuve_id = " + epreuve_id;
 		try {
@@ -70,6 +99,7 @@ public class SessionRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public void deleteFromSite(int site_id) {
 		String insertQuery = "delete from Session where site_id = " + site_id;
 		try {
@@ -80,6 +110,7 @@ public class SessionRepository {
 	    }
 	}
 	
+	@Asynchronous
 	public List<Session> findAll() {
 		
 		List<Session> liste = new ArrayList<Session>();
@@ -121,6 +152,48 @@ public class SessionRepository {
 		
 	}
 	
+	@Asynchronous
+	public List<Session> findByDiscipline(int discipline) {
+		String query = "SELECT s.* FROM Session s JOIN Epreuve e ON s.epreuve_id = e.id JOIN Discipline d ON e.discipline_id = d.id WHERE d.id = " + discipline + ";";
+		List<Session> liste = new ArrayList<Session>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Statement statement;
+		try {
+			statement = connection.createStatement();
+			
+			ResultSet rs = statement.executeQuery(query);
+			
+			while(rs.next()) {
+				int id = Integer.parseInt(rs.getString("id"));
+				String code = rs.getString("code");
+				Date date = sdf.parse(rs.getString("date"));
+				Date heureDebut = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("heureDebut"));
+				Date heureFin = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("heureFin"));
+				String description = rs.getString("description");
+				
+				int siteId = Integer.parseInt(rs.getString("site_id"));
+				int typeSessionId = Integer.parseInt(rs.getString("typeSession_id"));
+				int epreuveId = Integer.parseInt(rs.getString("epreuve_id"));
+				
+				SiteRepository siteRepo = new SiteRepository();
+				TypeSessionRepository typeSessionRepo = new TypeSessionRepository();
+				EpreuveRepository epreuveRepo = new EpreuveRepository();
+				
+				liste.add(new Session(id, code, date, heureDebut, heureFin, description, siteRepo.findById(siteId), typeSessionRepo.findById(typeSessionId), epreuveRepo.findById(epreuveId)));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch(ParseException p) {
+			p.printStackTrace();
+		}
+		return liste;
+	}
+	
+	@Asynchronous
 	public Session findById(int id) {
 		Statement statement;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -131,8 +204,8 @@ public class SessionRepository {
 			while(rs.next()) {
 				String code = rs.getString("code");
 				Date date = sdf.parse(rs.getString("date"));
-				Date heureDebut = new Date(sdf.parse(rs.getString("heureDebut")).getTime());
-				Date heureFin = new Date(sdf.parse(rs.getString("heureFin")).getTime());
+				Date heureDebut = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("heureDebut"));
+				Date heureFin = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("heureFin"));
 				String description = rs.getString("description");
 				
 				int siteId = Integer.parseInt(rs.getString("site_id"));
