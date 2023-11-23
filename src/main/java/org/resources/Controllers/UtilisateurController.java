@@ -59,7 +59,7 @@ public class UtilisateurController {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	@Path("/")
-	public String hello() throws IOException {
+	public String hello(@CookieParam("sessionId") String sessionId) throws IOException {
 		PebbleEngine engine = new PebbleEngine.Builder().build();
 		PebbleTemplate compiledTemplate = engine.getTemplate("WEB-INF/views/users/users.html");
 		
@@ -71,6 +71,14 @@ public class UtilisateurController {
 		context.put("rolesUtilisateurs", listeRolesUtilisateurs);
 		StringWriter writer = new StringWriter();
 
+		if(SessionConnexion.getUtilisateur(sessionId) != null){
+			context.put("RoleCookie",SessionConnexion.getUtilisateur(sessionId).getRole().getId());
+			context.put("Connecter", true);
+		}
+		else {
+			context.put("Connecter", false);
+		}
+		
 		compiledTemplate.evaluate(writer, context);
 
 
@@ -112,9 +120,10 @@ public class UtilisateurController {
 	        Utilisateur utilisateur = utilisateurRepository2.findByEmailPassword(email, password);
 
 	        if (utilisateur != null && BCrypt.verifyer().verify(password.toCharArray(), utilisateur.getPassword()).verified) {
+
 	            String sessionId = SessionConnexion.connecterUtilisateur(utilisateur);
 
-				NewCookie cookie = new NewCookie("sessionId", sessionId);
+				NewCookie cookie = new NewCookie("sessionId", sessionId, "/", "localhost", "JeuxOlympique", NewCookie.DEFAULT_MAX_AGE, false);
 
 	            return Response.seeOther(URI.create("http://localhost:8080/JeuxOlympique/web/accueil")).cookie(cookie).build();
 	        } else {

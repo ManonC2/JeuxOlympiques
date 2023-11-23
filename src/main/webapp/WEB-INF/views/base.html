@@ -10,28 +10,26 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="http://localhost:8080/JeuxOlympique/web/accueil">Système de gestion</a>
             <ul class="navbar-nav">
+				{% if Connecter == true and ((RoleCookie==2 or RoleCookie==3) or RoleCookie==4) %}
+	                <li class="nav-item">
+	                    <a class="nav-link active" aria-current="page" href="http://localhost:8080/JeuxOlympique/web/sites">Sites</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" href="http://localhost:8080/JeuxOlympique/web/epreuves">Epreuves</a>
+	                </li>
+                {% endif %}
+                {% if Connecter == true and ((RoleCookie==1 or RoleCookie==3) or RoleCookie==4) %}
+	                <li class="nav-item">
+	                    <a class="nav-link" href="http://localhost:8080/JeuxOlympique/web/sessions">Sessions</a>
+	      	        </li>
+	      	    {% endif %}
+      	        {% if Connecter == true and RoleCookie==4 %}
+	      	        <li class="nav-item">
+	                    <a class="nav-link" href="http://localhost:8080/JeuxOlympique/web/users">Utilisateurs</a>
+	                </li>
+                {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="http://localhost:8080/JeuxOlympique/web/sites">Sites</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8080/JeuxOlympique/web/epreuves">Epreuves</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8080/JeuxOlympique/web/sessions">Sessions</a>
-      	        </li>
-      	        <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8080/JeuxOlympique/web/users">Utilisateurs</a>
-                </li>
-  				<li class="nav-item">
-                {% if sessionIdCookie != null %}
-                        <!-- Utilisez la méthode getNomUtilisateur pour obtenir le nom de l'utilisateur -->
-                        <span class="navbar-text">
-                            Bienvenue, {{ sessionConnexion.getNomUtilisateur(sessionIdCookie.getValue()) }}
-                        </span>
-                    {% endif %}
-                </li>
-                <li class="nav-item">
-                    {% if sessionIdCookie != null %}
+                    {% if Connecter == true %}
                         <!-- Utilisateur connecté : afficher le bouton de déconnexion -->
                         <a href="http://localhost:8080/JeuxOlympique/web/users/deconnexion" class="btn btn-danger">Se déconnecter</a>
                     {% else %}

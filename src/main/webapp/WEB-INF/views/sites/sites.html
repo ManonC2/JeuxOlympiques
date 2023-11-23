@@ -3,9 +3,11 @@
 {% block title %} Sites {% endblock %}
 
 {% block content %}
+{% if Connecter == true and ((RoleCookie==2 or 3) or 4) %}
 	<div class="d-flex justify-content-center">
 		<a href="http://localhost:8080/JeuxOlympique/web/sites/newSite"><button class="btn btn-primary mb-3">Ajouter un site</button></a>
 	</div>
+{% endif %}
 	<div class="d-flex justify-content-center">
 	<table class="table w-75">
 		<thead>
@@ -14,7 +16,9 @@
 				<th scope="col">Nom</th>
 				<th scope="col">Ville</th>
 				<th scope="col">Catégorie</th>
-				<th scope="col">Actions</th>
+				{% if Connecter == true and ((RoleCookie==2 or 3) or 4) %}
+					<th scope="col">Actions</th>
+				{% endif %}
 			</tr>
 		</thead>
 		<tbody>
@@ -24,8 +28,9 @@
 			      <td>{{ site.nom }}</td>
 			      <td>{{ site.ville }}</td>
 			      <td>{{ site.categorieSite.nom }}</td>
-			      <td><a class="btn btn-warning" href="http://localhost:8080/JeuxOlympique/web/sites/updateSite?id={{ site.id }}">Modifier</a> <a class="btn btn-danger" href="http://localhost:8080/JeuxOlympique/web/sites/delete?id={{ site.id }}">Supprimer</a></td>
-			     
+			      {% if Connecter == true and ((RoleCookie==2 or 3) or 4) %}
+			      	<td><a class="btn btn-warning" href="http://localhost:8080/JeuxOlympique/web/sites/updateSite?id={{ site.id }}">Modifier</a> <a class="btn btn-danger" href="http://localhost:8080/JeuxOlympique/web/sites/delete?id={{ site.id }}">Supprimer</a></td>
+			     {% endif %}
 			{% endfor %}
 		</tbody>
 	</table>

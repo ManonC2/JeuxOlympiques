@@ -13,6 +13,7 @@ import org.resources.Models.Site;
 import org.resources.Repositories.DisciplineRepository;
 import org.resources.Repositories.EpreuveRepository;
 import org.resources.Repositories.SiteRepository;
+import org.resources.Models.SessionConnexion;
 
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
@@ -20,6 +21,7 @@ import com.mitchellbosecke.pebble.template.PebbleTemplate;
 import jakarta.ejb.Asynchronous;
 import jakarta.ejb.Stateless;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.CookieParam;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -38,7 +40,7 @@ public class AccueilController {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	@Path("/")
-	public String hello() throws IOException {
+	public String hello(@CookieParam("sessionId") String sessionId) throws IOException {
 		PebbleEngine engine = new PebbleEngine.Builder().build();
 		PebbleTemplate compiledTemplate = engine.getTemplate("WEB-INF/views/accueil.html");
 
@@ -50,8 +52,18 @@ public class AccueilController {
 		
 		StringWriter writer = new StringWriter();
 
+		if(SessionConnexion.getUtilisateur(sessionId) != null){
+			context.put("NomCookie",SessionConnexion.getUtilisateur(sessionId).getNom());
+			context.put("RoleCookie",SessionConnexion.getUtilisateur(sessionId).getRole().getId());
+			context.put("Connecter", true);
+		}
+		else {
+			context.put("NomCookie","Anonyme");
+			context.put("Connecter", false);
+		}
 		compiledTemplate.evaluate(writer, context);
 
+		
 		String output = writer.toString();
 		
 		return output;
