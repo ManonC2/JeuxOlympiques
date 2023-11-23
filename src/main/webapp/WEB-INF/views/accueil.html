@@ -3,6 +3,84 @@
 {% block title %} Accueil {% endblock %}
 
 {% block content %}
-	<h1> Home </h1>
-	<p> Welcome to my home page. My name is {{ name }}.</p>
+    <h1> Home </h1>
+    <p> Welcome to my home page. My name is {{ name }}.</p>
+
+    <div class="d-flex justify-content-space">
+            <a href="http://localhost:8080/JeuxOlympique/web/accueil/statistiques?id=1"><button class="btn btn-primary">Classement des 5 sites ayant le plus de sessions</button></a>
+            <a href="http://localhost:8080/JeuxOlympique/web/accueil/statistiques?id=2"><button class="btn btn-primary">Classement des 5 disciplines ayant le temps d'épreuves le plus long</button></a>
+            <a href="http://localhost:8080/JeuxOlympique/web/accueil/statistiques?id=3"><button class="btn btn-primary">Classement des disciplines par ordre décroissant selon la distance parcourue lors des sessions déjà réalisées</button></a>
+            <a href="http://localhost:8080/JeuxOlympique/web/accueil/statistiques?id=4"><button class="btn btn-primary">Liste des différentes catégories de poids disponibles toutes épreuves confondues</button></a>
+            <a href="http://localhost:8080/JeuxOlympique/web/accueil/statistiques?id=5"><button class="btn btn-primary">Liste des épreuves individuelles</button></a>
+            <a href="http://localhost:8080/JeuxOlympique/web/accueil/statistiques?id=6"><button class="btn btn-primary">Liste des épreuves collectives</button></a>
+    </div>
+    
+    {% if epreuves is not empty%}
+    <div class="d-flex justify-content-center">
+	<table class="table w-75">
+		<thead>
+			<tr>
+				<th scope="col">-</th>
+				<th scope="col">Discipline</th>
+				<th scope="col">Nom</th>
+				<th scope="col">Catégorie</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for epreuve in epreuves %}
+				 <tr>
+			      <td>{{ epreuve.id }}</td>
+			      <td>{{ epreuve.discipline.nom }}</td>
+			      <td>{{ epreuve.nom }}</td>
+			      <td>{{ epreuve.categorieEpreuve.nom }}</td>
+			{% endfor %}
+		</tbody>
+	</table>
+	</div>
+	{% endif %}
+	{% if sites is not empty%}
+	<div class="d-flex justify-content-center">
+	<table class="table w-75">
+		<thead>
+			<tr>
+				<th scope="col">-</th>
+				<th scope="col">Nom</th>
+				<th scope="col">Ville</th>
+				<th scope="col">Catégorie</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for site in sites %}
+				 <tr>
+			      <td>{{ site.id }}</td>
+			      <td>{{ site.nom }}</td>
+			      <td>{{ site.ville }}</td>
+			      <td>{{ site.categorieSite.nom }}</td> 
+			{% endfor %}
+		</tbody>
+	</table>
+	</div>
+    {% endif %}
+    {% if disciplines is not empty%}
+	<div class="d-flex justify-content-center">
+	<table class="table w-75">
+		<thead>
+			<tr>
+				<th scope="col">-</th>
+				<th scope="col">Nom</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for discipline in disciplines %}
+				 <tr>
+			      <td>{{ discipline.id }}</td>
+			      <td>{{ discipline.nom }}</td>
+			{% endfor %}
+		</tbody>
+	</table>
+	</div>
+    {% endif %}
 {% endblock %}
+

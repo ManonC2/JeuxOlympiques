@@ -114,7 +114,7 @@ public class DisciplineRepository {
 		try {
 			statement = connection.createStatement();
 			
-			ResultSet rs = statement.executeQuery("SELECT d.id, SUM(TIMESTAMPDIFF(MINUTE, s.heureDebut, s.heureFin)) AS temps_total_epreuves FROM Session s JOIN Epreuve e ON s.epreuve_id = e.id JOIN Discipline d ON e.id_discipline = d.id GROUP BY e.id_discipline, d.nom ORDER BY temps_total_epreuves DESC LIMIT 5;");
+			ResultSet rs = statement.executeQuery("SELECT d.id, SUM(TIMESTAMPDIFF(MINUTE, s.heureDebut, s.heureFin)) AS temps_total_epreuves FROM Session s JOIN Epreuve e ON s.epreuve_id = e.id JOIN Discipline d ON e.discipline_id = d.id GROUP BY e.discipline_id, d.nom ORDER BY temps_total_epreuves DESC LIMIT 5;");
 			
 			while(rs.next()) {
 				int id = Integer.parseInt(rs.getString("id"));				
@@ -137,7 +137,7 @@ public class DisciplineRepository {
 		try {
 			statement = connection.createStatement();
 			
-			ResultSet rs = statement.executeQuery("SELECT DISTINCT d.id FROM Discipline d JOIN Epreuve e ON d.id = e.id_discipline JOIN Session s ON e.id = s.epreuve_id WHERE s.date < CURRENT_DATE OR (s.date = CURRENT_DATE AND s.heureFin < CURRENT_TIME) AND d.id IN (1, 5) ORDER BY d.nom DESC;");
+			ResultSet rs = statement.executeQuery("SELECT DISTINCT d.id, d.nom FROM Discipline d JOIN Epreuve e ON d.id = e.discipline_id JOIN Session s ON e.id = s.epreuve_id WHERE s.date < CURRENT_DATE OR (s.date = CURRENT_DATE AND s.heureFin < CURRENT_TIME) AND d.id IN (1, 5) ORDER BY d.nom DESC;");
 			
 			while(rs.next()) {
 				int id = Integer.parseInt(rs.getString("id"));				
