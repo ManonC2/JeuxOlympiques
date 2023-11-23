@@ -30,7 +30,7 @@ Connection connection = DBManager.getInstance().getConnection();
 	
 	@Asynchronous
 	public void update(Site site) {
-	    String insertQuery = "update Site set nom = '" + site.getNom() + "', ville = '" + site.getVille() + "' where id = " + site.getId();
+	    String insertQuery = "update Site set nom = '" + site.getNom() + "', ville = '" + site.getVille() + "', categorie_id = " + site.getCategorieSite() + " where id = " + site.getId();
 	    try {
 	    	connection.createStatement().execute(insertQuery);
 	    }
